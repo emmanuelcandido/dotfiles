@@ -3,7 +3,6 @@
 
 setup_tools() {
     echo "[tools] Instalando apps essenciais..."
-
     run_in_arch "
         pacman -S --noconfirm vlc mpv qbittorrent evince file-roller \
             git ripgrep jq curl wget unzip zip python python-pip \
@@ -11,12 +10,12 @@ setup_tools() {
             rclone syncthing htop brightnessctl acpi xdg-utils \
             udisks2 gvfs gvfs-mtp \
             fish fd fzf zoxide eza bat neofetch \
-            openssh ufw > /dev/null 2>&1
-    " 2>/dev/null || echo "[tools] AVISO: alguns pacotes podem estar indisponíveis"
+            openssh ufw
+    " || echo "[tools] AVISO: Alguns pacotes podem estar indisponíveis"
 
-    # Chromium (último, bulk)
-    run_in_arch "pacman -S --noconfirm chromium > /dev/null 2>&1" || \
-        echo "[tools] Chromium não instalado (muita RAM para proot?)"
+    echo "[tools] Instalando Chromium (pode usar ~700MB RAM)..."
+    run_in_arch "pacman -S --noconfirm chromium" || \
+        echo "[tools] Chromium pulado (muita RAM para proot?)"
 
     echo "[tools] Apps instalados!"
 }

@@ -3,7 +3,7 @@
 # Uso: bash setup-archroid.sh
 # Baseado no setup-hacklab.sh original (Tech Jarves), reescrito para proot-distro + Arch + i3
 
-set -euo pipefail
+set -u
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" 2>/dev/null && pwd)"
 RED='\033[0;31m'; GREEN='\033[0;32m'; YELLOW='\033[1;33m'; CYAN='\033[0;36m'; PURPLE='\033[0;35m'; NC='\033[0m'
@@ -12,7 +12,7 @@ RED='\033[0;31m'; GREEN='\033[0;32m'; YELLOW='\033[1;33m'; CYAN='\033[0;36m'; PU
 if [ ! -d "${SCRIPT_DIR}/modules" ]; then
     echo -e "${YELLOW}Detectado execução via curl pipe. Clonando repositório...${NC}"
     TMP_DIR="$(mktemp -d)"
-    git clone --depth 1 https://github.com/emmanuelcandido/dotfiles.git "$TMP_DIR" 2>/dev/null || {
+    git clone --depth 1 https://github.com/emmanuelcandido/dotfiles.git "$TMP_DIR" || {
         echo -e "${RED}Erro ao clonar repositório. Verifique conexão.${NC}"
         exit 1
     }

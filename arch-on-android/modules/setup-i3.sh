@@ -3,28 +3,24 @@
 
 setup_i3() {
     echo "[i3] Instalando i3 + picom + ferramentas de desktop..."
+    echo "[i3] Sincronizando pacman..."
+    run_in_arch "pacman -Syu --noconfirm" || echo "[i3] AVISO: pacman -Syu falhou"
 
-    run_in_arch "
-        pacman -Syu --noconfirm > /dev/null 2>&1
+    echo "[i3] Instalando WM, bar e notificações..."
+    run_in_arch "pacman -S --noconfirm i3-wm i3status i3lock polybar picom dunst rofi alacritty" || \
+        echo "[i3] AVISO: Alguns pacotes WM falharam"
 
-        # WM + bar + notificações
-        pacman -S --noconfirm i3-wm i3status i3lock polybar picom dunst rofi alacritty > /dev/null 2>&1
+    echo "[i3] Instalando ferramentas de desktop..."
+    run_in_arch "pacman -S --noconfirm feh xorg-xrandr xorg-xrdb xorg-setxkbmap xclip maim \
+        flameshot network-manager-applet blueman pavucontrol pamixer playerctl \
+        copyq polkit polkit-gnome" || echo "[i3] AVISO: Algumas ferramentas falharam"
 
-        # Ferramentas de desktop
-        pacman -S --noconfirm feh xorg-xrandr xorg-xrdb xorg-setxkbmap xclip maim \
-            flameshot network-manager-applet blueman pavucontrol pamixer playerctl \
-            copyq polkit polkit-gnome > /dev/null 2>&1
+    echo "[i3] Instalando fontes..."
+    run_in_arch "pacman -S --noconfirm ttf-nerd-fonts-symbols ttf-font-awesome noto-fonts \
+        noto-fonts-emoji ttf-dejavu" || echo "[i3] AVISO: Algumas fontes falharam"
 
-        # Fontes
-        pacman -S --noconfirm ttf-nerd-fonts-symbols ttf-font-awesome noto-fonts \
-            noto-fonts-emoji ttf-dejavu > /dev/null 2>&1
-
-        # picom precisa de xrender no proot (glx não funciona)
-        mkdir -p /etc/xdg/picom
-    " 2>/dev/null || echo "[i3] AVISO: Alguns pacotes podem não ter instalado. Verifique."
-
-    # Cria picom config com xrender (proot não tem GLX)
-    run_in_arch "cat > /etc/xdg/picom/picom.conf << 'PICOM'
+    echo "[i3] Configurando picom (xrender)..."
+    run_in_arch "mkdir -p /etc/xdg/picom && cat > /etc/xdg/picom/picom.conf << 'PICOM'
 backend = \"xrender\";
 corner-radius = 8;
 shadow = true;
@@ -41,7 +37,7 @@ opacity-rule = [
   \"100:class_g = 'rofi'\",
   \"100:class_g = 'dunst'\"
 ];
-PICOM" 2>/dev/null || true
+PICOM" || echo "[i3] AVISO: Config picom falhou"
 
     echo "[i3] i3 + picom (xrender) instalados!"
 }

@@ -2,27 +2,33 @@
 # modules/setup-proot.sh — Instala proot-distro + Arch Linux
 
 setup_proot() {
-    echo "[proot] Atualizando Termux..."
-    yes | pkg update -y > /dev/null 2>&1
-    yes | pkg upgrade -y > /dev/null 2>&1
+    echo "[proot] Atualizando Termux (pode levar alguns minutos)..."
+    pkg update -y || echo "[proot] AVISO: pkg update falhou, continuando..."
+    pkg upgrade -y || true
 
     echo "[proot] Instalando proot-distro..."
-    pkg install -y proot-distro x11-repo tur-repo > /dev/null 2>&1
+    pkg install -y proot-distro x11-repo tur-repo || {
+        echo "[proot] ERRO: Falha ao instalar proot-distro"
+        exit 1
+    }
 
     if proot-distro list 2>/dev/null | grep -q "archlinux"; then
         echo "[proot] Arch Linux já instalado. Atualizando..."
-        proot-distro update archlinux > /dev/null 2>&1 || true
+        proot-distro update archlinux || true
     else
         echo "[proot] Instalando Arch Linux (pode levar alguns minutos)..."
-        proot-distro install archlinux
+        proot-distro install archlinux || {
+            echo "[proot] ERRO: Falha ao instalar Arch Linux"
+            exit 1
+        }
     fi
 
-    # Correção de DNS para o proot
+    echo "[proot] Configurando DNS..."
     proot-distro login archlinux -- bash -c "
         echo 'nameserver 8.8.8.8' > /etc/resolv.conf
         echo 'nameserver 1.1.1.1' >> /etc/resolv.conf
         chmod 644 /etc/resolv.conf
-    " 2>/dev/null || true
+    " || echo "[proot] AVISO: DNS config falhou (pode ser resolvido depois)"
 
     echo "[proot] Arch Linux pronto!"
 }
