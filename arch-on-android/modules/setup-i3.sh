@@ -11,7 +11,7 @@ setup_i3() {
         echo "[i3] AVISO: Alguns pacotes WM falharam"
 
     echo "[i3] Instalando ferramentas de desktop..."
-    run_in_arch "pacman -S --noconfirm feh xorg-xrandr xorg-xrdb xorg-setxkbmap xclip maim \
+    run_in_arch "pacman -S --noconfirm feh xorg-xrandr xorg-xrdb xorg-setxkbmap xorg-xsetroot xclip maim \
         flameshot network-manager-applet blueman pavucontrol pamixer playerctl \
         copyq polkit polkit-gnome" || echo "[i3] AVISO: Algumas ferramentas falharam"
 

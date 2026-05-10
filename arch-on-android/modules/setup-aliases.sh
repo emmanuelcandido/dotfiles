@@ -30,26 +30,23 @@ cleanup() {
 }
 trap cleanup SIGINT SIGTERM
 
-# Inicia PulseAudio se não estiver rodando
+# Inicia PulseAudio (unset PULSE_SERVER temporariamente senão ele recusa iniciar)
 pulseaudio --check 2>/dev/null || {
     echo "[audio] Iniciando PulseAudio..."
-    pulseaudio --start --exit-idle-time=-1
+    env -u PULSE_SERVER pulseaudio --start --exit-idle-time=-1
     sleep 1
     pactl load-module module-native-protocol-tcp auth-ip-acl=127.0.0.1 auth-anonymous=1 2>/dev/null
 }
 
-# Inicia Termux:X11
+# Instala Termux:X11 se não existir
+command -v termux-x11 >/dev/null 2>&1 || {
+    echo "[x11] Instalando Termux:X11..."
+    pkg install -y termux-x11 2>/dev/null || true
+}
+
 echo "[x11] Iniciando Termux:X11..."
 termux-x11 :0 -ac &
 sleep 3
-
-# Seta wallpaper (default nord)
-WALLPAPER_SRC="${HOME}/.config/archroid-wallpaper.png"
-if [ -f "$WALLPAPER_SRC" ]; then
-    WALL_CMD="feh --bg-fill ${WALLPAPER_SRC}"
-else
-    WALL_CMD="xsetroot -solid '#2E3440'"
-fi
 
 echo "[arch] Iniciando Arch Linux + i3..."
 echo "      Abra o app Termux:X11 para ver o desktop."
@@ -70,7 +67,9 @@ proot-distro login archlinux \
         export MESA_VK_WSI_PRESENT_MODE=immediate
         export ZINK_DESCRIPTORS=lazy
 
-        ${WALL_CMD}
+        # Seta wallpaper (nord solid)
+        command -v xsetroot >/dev/null 2>&1 || pacman -S --noconfirm xorg-xsetroot >/dev/null 2>&1
+        xsetroot -solid '#2E3440' 2>/dev/null || true
 
         # Inicia picom (xrender para proot)
         picom --config /etc/xdg/picom/picom.conf -b 2>/dev/null || true
