@@ -71,10 +71,16 @@ proot-distro login archlinux \
         if [ -d /tmp/dotfiles-configs ]; then rm -rf /tmp/dotfiles-configs; fi
         git clone --depth 1 https://github.com/emmanuelcandido/dotfiles.git /tmp/dotfiles-configs 2>/dev/null
         if [ -f /tmp/dotfiles-configs/arch-on-android/configs/i3/config ]; then
-            cp /tmp/dotfiles-configs/arch-on-android/configs/i3/config "$HOME/.config/i3/config" 2>/dev/null
-            cp /tmp/dotfiles-configs/arch-on-android/configs/polybar/config.ini "$HOME/.config/polybar/config.ini" 2>/dev/null
-            cp /tmp/dotfiles-configs/arch-on-android/configs/dunst/dunstrc "$HOME/.config/dunst/dunstrc" 2>/dev/null
-            cp /tmp/dotfiles-configs/arch-on-android/configs/rofi/config.rasi "$HOME/.config/rofi/config.rasi" 2>/dev/null
+            mkdir -p "$HOME/.config/i3" "$HOME/.config/polybar/scripts" \
+                     "$HOME/.config/dunst" "$HOME/.config/rofi" \
+                     "$HOME/.config/wallpapers"
+            cp /tmp/dotfiles-configs/arch-on-android/configs/i3/config                      "$HOME/.config/i3/config"
+            cp /tmp/dotfiles-configs/arch-on-android/configs/polybar/config.ini             "$HOME/.config/polybar/config.ini"
+            cp /tmp/dotfiles-configs/arch-on-android/configs/polybar/scripts/updates.sh     "$HOME/.config/polybar/scripts/updates.sh"
+            cp /tmp/dotfiles-configs/arch-on-android/configs/dunst/dunstrc                  "$HOME/.config/dunst/dunstrc"
+            cp /tmp/dotfiles-configs/arch-on-android/configs/rofi/config.rasi               "$HOME/.config/rofi/config.rasi"
+            cp /tmp/dotfiles-configs/arch-on-android/configs/wallpapers/0010.png            "$HOME/.config/wallpapers/0010.png"
+            chmod +x "$HOME/.config/polybar/scripts/updates.sh" 2>/dev/null
         fi
         rm -rf /tmp/dotfiles-configs
 
@@ -122,11 +128,15 @@ git clone --depth 1 "$REPO_URL" "$TMP_REPO" 2>/dev/null || {
 }
 
 echo "Copiando configs..."
-mkdir -p "$HOME/.config/i3" "$HOME/.config/polybar" "$HOME/.config/dunst" "$HOME/.config/rofi"
-cp "$TMP_REPO/arch-on-android/configs/i3/config" "$HOME/.config/i3/config" 2>/dev/null
-cp "$TMP_REPO/arch-on-android/configs/polybar/config.ini" "$HOME/.config/polybar/config.ini" 2>/dev/null
-cp "$TMP_REPO/arch-on-android/configs/dunst/dunstrc" "$HOME/.config/dunst/dunstrc" 2>/dev/null
-cp "$TMP_REPO/arch-on-android/configs/rofi/config.rasi" "$HOME/.config/rofi/config.rasi" 2>/dev/null
+mkdir -p "$HOME/.config/i3" "$HOME/.config/polybar/scripts" "$HOME/.config/dunst" "$HOME/.config/rofi" "$HOME/.config/wallpapers"
+cp "$TMP_REPO/arch-on-android/configs/i3/config"                      "$HOME/.config/i3/config" 2>/dev/null
+cp "$TMP_REPO/arch-on-android/configs/polybar/config.ini"             "$HOME/.config/polybar/config.ini" 2>/dev/null
+cp "$TMP_REPO/arch-on-android/configs/polybar/scripts/updates.sh"     "$HOME/.config/polybar/scripts/updates.sh" 2>/dev/null
+cp "$TMP_REPO/arch-on-android/configs/dunst/dunstrc"                  "$HOME/.config/dunst/dunstrc" 2>/dev/null
+cp "$TMP_REPO/arch-on-android/configs/rofi/config.rasi"               "$HOME/.config/rofi/config.rasi" 2>/dev/null
+cp "$TMP_REPO/arch-on-android/configs/wallpapers/0010.png"            "$HOME/.config/wallpapers/0010.png" 2>/dev/null
+
+chmod +x "$HOME/.config/polybar/scripts/updates.sh" 2>/dev/null
 
 rm -rf "$TMP_REPO"
 echo "Configs aplicadas! Reinicie o i3: Mod+Shift+R"

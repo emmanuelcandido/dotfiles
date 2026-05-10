@@ -7,16 +7,16 @@ setup_i3() {
     run_in_arch "pacman -Syu --noconfirm" || echo "[i3] AVISO: pacman -Syu falhou"
 
     echo "[i3] Instalando WM, bar e notificações..."
-    run_in_arch "pacman -S --noconfirm i3-wm i3status i3lock polybar picom dunst rofi alacritty" || \
+    run_in_arch "pacman -S --noconfirm --needed i3-wm i3status i3lock polybar picom dunst rofi alacritty" || \
         echo "[i3] AVISO: Alguns pacotes WM falharam"
 
     echo "[i3] Instalando ferramentas de desktop..."
-    run_in_arch "pacman -S --noconfirm feh xorg-xrandr xorg-xrdb xorg-setxkbmap xorg-xsetroot xclip maim \
+    run_in_arch "pacman -S --noconfirm --needed feh xorg-xrandr xorg-xrdb xorg-setxkbmap xorg-xsetroot xclip maim \
         flameshot network-manager-applet blueman pavucontrol pamixer playerctl \
         copyq polkit polkit-gnome" || echo "[i3] AVISO: Algumas ferramentas falharam"
 
     echo "[i3] Instalando fontes..."
-    run_in_arch "pacman -S --noconfirm ttf-nerd-fonts-symbols ttf-font-awesome noto-fonts \
+    run_in_arch "pacman -S --noconfirm --needed ttf-nerd-fonts-symbols ttf-font-awesome noto-fonts \
         noto-fonts-emoji ttf-dejavu" || echo "[i3] AVISO: Algumas fontes falharam"
 
     echo "[i3] Configurando picom (xrender)..."

@@ -1,5 +1,6 @@
-# i3 config — ArchDroid (proot-distro + Termux:X11)
+# i3 config — ArchDroid
 # Baseado nas preferências TWM: QWER focus, ASDF resize, Nord colors
+# Vicinae: Ctrl+Alt+V
 
 set $mod Mod4
 set $alt Mod1
@@ -25,9 +26,6 @@ set $nord15  #B48EAD
 # ── Font ──
 font pango:Noto Sans 10
 
-# ── Modifier ──
-set $mod Mod4
-
 # ── Focus (QWER) ──
 bindsym $mod+q focus left
 bindsym $mod+w focus down
@@ -40,7 +38,7 @@ bindsym $mod+Shift+w move down
 bindsym $mod+Shift+e move up
 bindsym $mod+Shift+r move right
 
-# ── Resize (ASDF) ──
+# ── Resize mode (ASDF) ──
 mode "resize" {
     bindsym a resize shrink width 10 px or 10 ppt
     bindsym s resize grow height 10 px or 10 ppt
@@ -52,7 +50,7 @@ mode "resize" {
 }
 bindsym $mod+a mode "resize"
 
-# ── Stack/Tab navigation ──
+# ── Stack / Tab ──
 bindsym $alt+z layout stacking
 bindsym $alt+x layout default
 bindsym $alt+c layout tabbed
@@ -71,6 +69,25 @@ bindsym $mod+g kill
 bindsym $mod+Shift+minus move scratchpad
 bindsym $mod+minus scratchpad show
 
+# ── Apps ──
+bindsym $mod+Return exec alacritty
+bindsym $mod+Shift+Return exec rofi -show drun -show-icons
+bindsym $mod+space exec rofi -show run
+bindsym Control+Mod1+v exec vicinae
+bindsym $mod+grave exec flameshot gui
+
+# ── Brightness ──
+bindsym Control+Mod1+1 exec brightnessctl set 10%
+bindsym Control+Mod1+2 exec brightnessctl set 20%
+bindsym Control+Mod1+3 exec brightnessctl set 30%
+bindsym Control+Mod1+4 exec brightnessctl set 40%
+bindsym Control+Mod1+5 exec brightnessctl set 50%
+bindsym Control+Mod1+6 exec brightnessctl set 60%
+bindsym Control+Mod1+7 exec brightnessctl set 70%
+bindsym Control+Mod1+8 exec brightnessctl set 80%
+bindsym Control+Mod1+9 exec brightnessctl set 90%
+bindsym Control+Mod1+0 exec brightnessctl set 0%
+
 # ── Workspaces ──
 set $ws1 "1: Browser"
 set $ws2 "2: Obsidian"
@@ -81,16 +98,7 @@ set $ws6 "6: Messages"
 set $ws7 "7: Media"
 set $ws8 "8: Dev"
 set $ws9 "9: AI"
-
-workspace 1 output primary
-workspace 2 output primary
-workspace 3 output primary
-workspace 4 output primary
-workspace 5 output primary
-workspace 6 output primary
-workspace 7 output primary
-workspace 8 output primary
-workspace 9 output primary
+set $ws10 "10: Stage"
 
 bindsym $mod+1 workspace $ws1
 bindsym $mod+2 workspace $ws2
@@ -131,32 +139,24 @@ for_window [class="(?i)rofi"] floating enable
 for_window [class="(?i)polybar"] floating disable
 
 # ── Startup ──
-exec --no-startup-id polybar main
-exec --no-startup-id dunst
-exec --no-startup-id picom --config /etc/xdg/picom/picom.conf -b
-exec --no-startup-id feh --bg-fill '#2E3440' 2>/dev/null || true
+exec_always --no-startup-id polybar main
+exec_always --no-startup-id dunst
+exec_always --no-startup-id picom --config /etc/xdg/picom/picom.conf -b
+exec_always --no-startup-id feh --randomize --bg-fill ~/.config/wallpapers/nord/
+
+# ── Mixer ──
+bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
+bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%
+bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+bindsym XF86AudioMicMute exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
+bindsym XF86AudioPlay exec playerctl play-pause
+bindsym XF86AudioNext exec playerctl next
+bindsym XF86AudioPrev exec playerctl previous
 
 # ── Color scheme (Nord) ──
-# class                   border  backgr. text    indicator child_border
 client.focused            $nord8  $nord8  $nord6  $nord8   $nord8
 client.focused_inactive   $nord1  $nord1  $nord4  $nord1   $nord1
 client.unfocused          $nord1  $nord1  $nord4  $nord1   $nord1
 client.urgent             $nord11 $nord11 $nord6  $nord11  $nord11
 client.placeholder        $nord0  $nord0  $nord4  $nord0   $nord0
 client.background         $nord0
-
-# ── Bar (polybar gerenciado via polybar/config.ini) ──
-bar {
-    status_command i3status
-    position top
-    workspace_buttons yes
-    strip_workspace_numbers yes
-    colors {
-        background $nord0
-        statusline $nord4
-        focused_workspace  $nord8  $nord8  $nord6
-        active_workspace   $nord2  $nord2  $nord4
-        inactive_workspace $nord0  $nord0  $nord4
-        urgent_workspace   $nord11 $nord11 $nord6
-    }
-}
