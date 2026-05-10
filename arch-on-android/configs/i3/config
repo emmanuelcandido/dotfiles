@@ -40,19 +40,19 @@ gaps inner 4
 gaps outer 2
 
 # ── Workspace Definitions (Nerd Font icons) ──
-set $ws0  "0 "
-set $ws1  "1 "
-set $ws2  "2 "
-set $ws3  "3 "
-set $ws4  "4 "
-set $ws5  "5 "
-set $ws6  "6 "
-set $ws7  "7 "
-set $ws8  "8 "
-set $ws9  "9 "
+set $ws0  "0  "
+set $ws1  "1  "
+set $ws2  "2  "
+set $ws3  "3  "
+set $ws4  "4  "
+set $ws5  "5  "
+set $ws6  "6  "
+set $ws7  "7  "
+set $ws8  "8  "
+set $ws9  "9  "
 set $ws10 "10 "
 set $ws11 "11 "
-set $ws12 "12 "
+set $ws12 "12  "
 set $ws13 "1¹ "
 set $ws14 "2² "
 set $ws15 "3³ "
@@ -229,7 +229,7 @@ bindsym $alt+F11 exec code
 bindsym $alt+F12 exec gtk-launch WebApp-Chatbox2077.desktop
 bindsym $alt+x exec curl "127.0.0.1:60828/selection_translate"
 bindsym Control+F12 exec curl "127.0.0.1:60828/input_translate"
-bindsym Control+space exec ulauncher
+bindsym Control+space exec rofi -show drun -show-icons
 
 # ── Screenshots ──
 bindsym Print exec flameshot gui
