@@ -1,0 +1,134 @@
+# Essential packages - Instalados em QUALQUER máquina Arch Linux
+# Core system
+base
+base-devel
+linux
+linux-firmware
+systemd
+systemd-sysvcompat
+sudo
+bash
+pacman
+pacman-contrib
+
+# Xorg (i3 = X11)
+xorg-server
+xorg-xinit
+xorg-xrandr
+xorg-xrdb
+xorg-setxkbmap
+xorg-xprop
+xorg-xdpyinfo
+xorg-xmodmap
+
+# WM + Desktop
+i3-wm
+i3status
+i3lock
+picom
+dunst
+rofi
+polybar
+alacritty
+kitty
+
+# Audio
+pipewire
+pipewire-pulse
+pipewire-alsa
+wireplumber
+pavucontrol
+pamixer
+playerctl
+
+# Bluetooth
+bluez
+bluez-utils
+blueman
+
+# Network
+networkmanager
+network-manager-applet
+dhcpcd
+
+# Security
+ufw
+openssh
+
+# Fonts
+ttf-nerd-fonts-symbols
+ttf-font-awesome
+ttf-hack-nerd
+noto-fonts
+noto-fonts-emoji
+noto-fonts-cjk
+ttf-dejavu
+ttf-liberation
+
+# Development
+git
+ripgrep
+jq
+curl
+wget
+unzip
+zip
+python
+python-pip
+nodejs-lts-iron
+npm
+go
+rustup
+make
+gcc
+
+# Tools
+rclone
+syncthing
+flameshot
+copyq
+htop
+brightnessctl
+playerctl
+acpi
+xdg-utils
+ntfs
+exfatprogs
+btrfs-progs
+dosfstools
+fuse2
+udisks2
+gvfs
+gvfs-mtp
+polkit
+polkit-gnome
+lxappearance
+qt5ct
+
+# CLI
+fish
+fd
+fzf
+zoxide
+eza
+bat
+neofetch
+
+# Apps
+chromium
+obsidian
+vlc
+mpv
+qbittorrent
+evince
+file-roller
+zenity
+
+# Screenshot
+maim
+xclip
+
+# AUR helpers
+pikaur
+
+# Claude Code (via npm - instalado pelo script)

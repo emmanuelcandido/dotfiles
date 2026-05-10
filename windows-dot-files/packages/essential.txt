@@ -1,0 +1,29 @@
+# Essential packages — instalados em QUALQUER Windows
+# Formato: winget IDs
+
+# Browsers
+Google.Chrome
+
+# Dev
+Git.Git
+Microsoft.VisualStudioCode
+OpenJS.NodeJS.LTS
+Python.Python.3.12
+
+# Tools
+Rclone.Rclone
+7zip.7zip
+voidtools.Everything
+Greenshot.Greenshot
+Mozilla.Firefox
+
+# Media
+VideoLAN.VLC
+
+# TWM
+Komorebi.Komorebi
+AutoHotkey.AutoHotkey
+
+# CLI
+Microsoft.PowerShell
+Microsoft.WindowsTerminal

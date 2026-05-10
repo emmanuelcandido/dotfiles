@@ -1,0 +1,22 @@
+# Android packages — instalados no Termux HOST (fora do proot)
+# x11-repo e tur-repo assumidos
+
+# Core
+x11-repo
+tur-repo
+proot-distro
+termux-x11-nightly
+xorg-xrandr
+
+# GPU
+mesa-zink
+mesa-vulkan-icd-freedreno
+vulkan-loader-android
+
+# Audio
+pulseaudio
+
+# Ferramentas (host)
+git
+wget
+curl

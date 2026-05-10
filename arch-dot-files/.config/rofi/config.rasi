@@ -1,0 +1,95 @@
+/* rofi config — Nord theme */
+configuration {
+  modi: "drun,run";
+  show-icons: true;
+  font: "Noto Sans 10";
+  terminal: "alacritty";
+  drun-display-format: "{name}";
+  display-drun: "   Apps";
+  display-run: "   Run";
+  sidebar-mode: false;
+  icon-theme: "Papirus";
+}
+
+* {
+  bg-col:        #2E3440;
+  bg-col-light:  #3B4252;
+  border-col:    #4C566A;
+  selected-col:  #4C566A;
+  fg-col:        #D8DEE9;
+  fg-col-dim:    #A8ACB3;
+  urgent-col:    #BF616A;
+  blue-col:      #88C0D0;
+
+  margin: 0;
+  padding: 0;
+  spacing: 4;
+  background-color: transparent;
+  text-color: @fg-col;
+}
+
+window {
+  width: 600px;
+  border: 2px;
+  border-color: @border-col;
+  border-radius: 8;
+  background-color: @bg-col;
+  padding: 8;
+  location: center;
+  anchor: center;
+}
+
+inputbar {
+  background-color: @bg-col-light;
+  border-radius: 6;
+  padding: 6;
+  spacing: 8;
+  children: [ prompt, entry ];
+}
+
+prompt {
+  text-color: @blue-col;
+}
+
+entry {
+  placeholder: "Search...";
+  placeholder-color: @fg-col-dim;
+}
+
+listview {
+  lines: 8;
+  columns: 1;
+  spacing: 4;
+  padding: 8 0 0 0;
+}
+
+element {
+  padding: 6;
+  border-radius: 6;
+}
+
+element normal.normal {
+  text-color: @fg-col;
+}
+
+element selected.normal {
+  background-color: @selected-col;
+  text-color: @fg-col;
+}
+
+element urgent.normal {
+  text-color: @urgent-col;
+}
+
+element-icon {
+  size: 24px;
+}
+
+element-text {
+  text-color: inherit;
+}
+
+scrollbar {
+  width: 4px;
+  handle-color: @border-col;
+}

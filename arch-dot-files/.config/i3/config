@@ -1,0 +1,247 @@
+# i3 config — ported from Komorebi/GlazeWM keybindings + workspaces
+# Ref: projects/twm-reference.md
+# Nord colorscheme
+
+# === Modifier ===
+set $mod Mod1
+set $left q
+set $down w
+set $up e
+set $right r
+
+# === Font ===
+font pango:Noto Sans 10
+
+# === Nord Colors ===
+set $nord0    #2E3440
+set $nord1    #3B4252
+set $nord2    #434C5E
+set $nord3    #4C566A
+set $nord4    #D8DEE9
+set $nord5    #E5E9F0
+set $nord6    #ECEFF4
+set $nord7    #8FBCBB
+set $nord8    #88C0D0
+set $nord9    #81A1C1
+set $nord10   #5E81AC
+set $nord11   #BF616A
+set $nord12   #D08770
+set $nord13   #EBCB8B
+set $nord14   #A3BE8C
+set $nord15   #B48EAD
+
+# === Window colors ===
+client.focused          $nord8 $nord8 $nord4 $nord8
+client.focused_inactive $nord1 $nord1 $nord4 $nord1
+client.unfocused        $nord1 $nord1 $nord4 $nord1
+client.urgent           $nord11 $nord11 $nord4 $nord11
+client.placeholder      $nord0 $nord0 $nord4 $nord0
+client.background       $nord0
+
+# === Gaps ===
+gaps inner 4
+gaps outer 2
+smart_gaps on
+smart_borders on
+
+# === Hide edge borders — polybar at top ===
+hide_edge_borders none
+
+# === Default layout ===
+workspace_layout default
+
+# === Focus follows mouse ===
+focus_follows_mouse no
+mouse_warping output
+
+# === Workspace names (GlazeWM layout) ===
+set $ws1  "1:Navegador"
+set $ws2  "2:Obsidian"
+set $ws3  "3:Notion"
+set $ws4  "4:Calendar"
+set $ws5  "5:Arquivos"
+set $ws6  "6:Mensagens"
+set $ws7  "7:Media"
+set $ws8  "8:Downloads"
+set $ws9  "9:Dev"
+set $ws10 "10:Downloads"
+set $ws11 "11:AI"
+set $ws12 "12:Jogos"
+set $ws13 "13"
+set $ws14 "14"
+set $ws15 "15"
+set $ws16 "16"
+set $ws17 "17"
+set $ws18 "18"
+set $ws19 "19"
+set $ws20 "20"
+set $ws21 "21"
+set $ws22 "22"
+set $ws23 "23:Stage"
+
+# === FOCUS — QWER (left/down/up/right) ===
+bindsym $mod+$left   focus left
+bindsym $mod+$down   focus down
+bindsym $mod+$up     focus up
+bindsym $mod+$right  focus right
+
+# === RESIZE — ASDF ===
+bindsym $mod+a resize shrink width 10 px or 10 ppt
+bindsym $mod+s resize shrink height 10 px or 10 ppt
+bindsym $mod+d resize grow width 10 px or 10 ppt
+bindsym $mod+f resize grow height 10 px or 10 ppt
+
+# === MOVE — Shift+QWER ===
+bindsym $mod+Shift+$left   move left
+bindsym $mod+Shift+$down   move down
+bindsym $mod+Shift+$up     move up
+bindsym $mod+Shift+$right  move right
+
+# === ACTIONS ===
+bindsym $mod+g        kill
+bindsym $mod+t        fullscreen toggle
+bindsym $mod+b        bar mode toggle
+bindsym $mod+Shift+b  scratchpad show
+bindsym $mod+space    focus mode_toggle
+bindsym $mod+Shift+space floating toggle
+bindsym $mod+p        exec --no-startup-id i3-nagbar -t warning -m "Pause i3?" -b "Yes" "i3-msg exit"
+bindsym $mod+Escape   focus child
+
+# === STACK OPERATIONS ===
+bindsym $mod+z layout stacking
+bindsym $mod+x layout toggle split
+bindsym $mod+Shift+x layout default
+
+# === STACK NAVIGATION (CapsLock mode) ===
+# CapsLock as standalone = enter resize mode (like Komorebi)
+mode "resize" {
+    bindsym $left   resize shrink width  10 px or 10 ppt
+    bindsym $down   resize shrink height 10 px or 10 ppt
+    bindsym $up     resize grow height   10 px or 10 ppt
+    bindsym $right  resize grow width    10 px or 10 ppt
+    bindsym Return  mode "default"
+    bindsym Escape  mode "default"
+    bindsym $mod+$left   focus left
+    bindsym $mod+$down   focus down
+    bindsym $mod+$up     focus up
+    bindsym $mod+$right  focus right
+}
+bindsym CapsLock mode "resize"
+
+# === WORKSPACES F1-F12 (1-12) ===
+bindsym $mod+F1   workspace $ws1
+bindsym $mod+F2   workspace $ws2
+bindsym $mod+F3   workspace $ws3
+bindsym $mod+F4   workspace $ws4
+bindsym $mod+F5   workspace $ws5
+bindsym $mod+F6   workspace $ws6
+bindsym $mod+F7   workspace $ws7
+bindsym $mod+F8   workspace $ws8
+bindsym $mod+F9   workspace $ws9
+bindsym $mod+F10  workspace $ws10
+bindsym $mod+F11  workspace $ws11
+bindsym $mod+F12  workspace $ws12
+
+# === Move to workspaces F1-F12 ===
+bindsym $mod+Shift+F1   move container to workspace $ws1
+bindsym $mod+Shift+F2   move container to workspace $ws2
+bindsym $mod+Shift+F3   move container to workspace $ws3
+bindsym $mod+Shift+F4   move container to workspace $ws4
+bindsym $mod+Shift+F5   move container to workspace $ws5
+bindsym $mod+Shift+F6   move container to workspace $ws6
+bindsym $mod+Shift+F7   move container to workspace $ws7
+bindsym $mod+Shift+F8   move container to workspace $ws8
+bindsym $mod+Shift+F9   move container to workspace $ws9
+bindsym $mod+Shift+F10  move container to workspace $ws10
+bindsym $mod+Shift+F11  move container to workspace $ws11
+bindsym $mod+Shift+F12  move container to workspace $ws12
+
+# === Workspaces 13-22 ($mod+1-0) ===
+bindsym $mod+1 workspace $ws13
+bindsym $mod+2 workspace $ws14
+bindsym $mod+3 workspace $ws15
+bindsym $mod+4 workspace $ws16
+bindsym $mod+5 workspace $ws17
+bindsym $mod+6 workspace $ws18
+bindsym $mod+7 workspace $ws19
+bindsym $mod+8 workspace $ws20
+bindsym $mod+9 workspace $ws21
+bindsym $mod+0 workspace $ws22
+
+bindsym $mod+Shift+1 move container to workspace $ws13
+bindsym $mod+Shift+2 move container to workspace $ws14
+bindsym $mod+Shift+3 move container to workspace $ws15
+bindsym $mod+Shift+4 move container to workspace $ws16
+bindsym $mod+Shift+5 move container to workspace $ws17
+bindsym $mod+Shift+6 move container to workspace $ws18
+bindsym $mod+Shift+7 move container to workspace $ws19
+bindsym $mod+Shift+8 move container to workspace $ws20
+bindsym $mod+Shift+9 move container to workspace $ws21
+bindsym $mod+Shift+0 move container to workspace $ws22
+
+# === Stage workspace ===
+bindsym $mod+grave workspace $ws23
+bindsym $mod+Shift+grave move container to workspace $ws23
+
+# === Layout switching ===
+bindsym $mod+Tab workspace next
+bindsym $mod+Shift+Tab workspace prev
+
+# === Reload / Restart ===
+bindsym $mod+Shift+c reload
+bindsym $mod+Shift+r restart
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'Exit i3?' -b 'Yes' 'i3-msg exit'"
+
+# === SCREENSHOT ===
+bindsym Print exec --no-startup-id flameshot gui
+bindsym Shift+Print exec --no-startup-id flameshot full -p ~/Pictures
+
+# === MEDIA KEYS ===
+bindsym XF86AudioRaiseVolume exec --no-startup-id pamixer -i 5
+bindsym XF86AudioLowerVolume exec --no-startup-id pamixer -d 5
+bindsym XF86AudioMute exec --no-startup-id pamixer -t
+bindsym XF86AudioMicMute exec --no-startup-id pamixer --default-source -t
+bindsym XF86AudioPlay exec --no-startup-id playerctl play-pause
+bindsym XF86AudioNext exec --no-startup-id playerctl next
+bindsym XF86AudioPrev exec --no-startup-id playerctl previous
+bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl s +5%
+bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl s 5%-
+
+# === LAUNCHERS ===
+bindsym $mod+Return exec alacritty
+bindsym $mod+Shift+Return exec rofi -show drun -show-icons
+bindsym $mod+Shift+d exec rofi -show run -show-icons
+bindsym $mod+Shift+f exec thunar
+
+# === AUTOSTART ===
+# Polybar (kill existing first to avoid dupes on restart)
+exec_always --no-startup-id killall -q polybar; while pgrep -u $UID -x polybar >/dev/null; do sleep 0.5; done; polybar top
+
+# Compositor
+exec_always --no-startup-id killall -q picom; while pgrep -u $UID -x picom >/dev/null; do sleep 0.5; done; picom --config ~/.config/picom/picom.conf -b
+
+# Notification daemon
+exec --no-startup-id dunst
+
+# Network + Bluetooth tray
+exec --no-startup-id nm-applet
+exec --no-startup-id blueman-applet
+
+# Screenshot daemon
+exec --no-startup-id flameshot
+
+# Clipboard
+exec --no-startup-id copyq --start-server
+
+# Authentication agent
+exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+
+# Set Nord wallpaper (if feh available)
+exec_always --no-startup-id feh --randomize --bg-fill ~/wallpapers/* 2>/dev/null || true
+
+# === X settings ===
+exec_always --no-startup-id xsetroot -solid '#2E3440'
+exec_always --no-startup-id xrdb -merge ~/.Xresources 2>/dev/null || true
+
+# === Cursor ===
+exec_always --no-startup-id xsetroot -cursor_name left_ptr

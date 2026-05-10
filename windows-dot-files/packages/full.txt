@@ -1,0 +1,46 @@
+# Full packages — essential + curadoria
+# Apps selecionados manualmente, sem bloat
+
+# Office
+TheDocumentFoundation.LibreOffice
+
+# Image
+GIMP.GIMP
+Inkscape.Inkscape
+
+# Cloud
+Dropbox.Dropbox
+Nextcloud.NextcloudDesktop
+pcloud.pcloud
+
+# Communication
+Discord.Discord
+Telegram.TelegramDesktop
+WhatsApp.WhatsApp
+
+# Media
+Spotify.Spotify
+OBSProject.OBSStudio
+Kdenlive.Kdenlive
+
+# Gaming
+Valve.Steam
+
+# Development
+Docker.DockerDesktop
+Docker.DockerCLI
+Postman.Postman
+WinSCP.WinSCP
+PuTTY.PuTTY
+
+# Security
+ProtonTechnologies.ProtonVPN
+Bitwarden.Bitwarden
+
+# Tools
+OlderTails.ClavierPlus
+espanso.espanso
+Calibre.Calibre
+qBittorrent.qBittorrent
+Notion.Notion
+Obsidian.Obsidian
