@@ -12,13 +12,15 @@ setup_proot() {
         exit 1
     }
 
-    if proot-distro list 2>/dev/null | grep -q "archlinux"; then
+    if proot-distro login archlinux -- true 2>/dev/null; then
         echo "[proot] Arch Linux já instalado. Atualizando..."
         proot-distro update archlinux || true
     else
         echo "[proot] Instalando Arch Linux (pode levar alguns minutos)..."
         proot-distro install archlinux || {
             echo "[proot] ERRO: Falha ao instalar Arch Linux"
+            echo "[proot] Se já estiver instalado, continue com: proot-distro login archlinux"
+            echo "[proot] Ou reconfigure com: proot-distro reset archlinux"
             exit 1
         }
     fi
