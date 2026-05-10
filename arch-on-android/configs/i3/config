@@ -36,7 +36,7 @@ focus_on_window_activation smart
 popup_during_fullscreen smart
 
 # ── Workspace Definitions (Nerd Font icons) ──
-set $ws0  "0 "
+set $ws0  "0 "
 set $ws1  "1 "
 set $ws2  "2 "
 set $ws3  "3 "
@@ -49,12 +49,12 @@ set $ws9  "9 "
 set $ws10 "10 "
 set $ws11 "11 "
 set $ws12 "12 "
-set $ws13 "13 "
-set $ws14 "14 "
-set $ws15 "15 "
-set $ws16 "16 "
-set $ws17 "17 "
-set $ws18 "18 "
+set $ws13 "1¹ "
+set $ws14 "2² "
+set $ws15 "3³ "
+set $ws16 "4⁴ "
+set $ws17 "5⁵ "
+set $ws18 "6⁶ "
 
 # ── Focus (QWER) ──
 bindsym $mod+q focus left
