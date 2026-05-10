@@ -6,7 +6,19 @@
 
 set -euo pipefail
 
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" 2>/dev/null && pwd)"
+
+# Detect curl pipe execution — BASH_SOURCE points to /proc/self/fd when piped
+if [ ! -d "${SCRIPT_DIR}/modules" ]; then
+    echo -e "${YELLOW}Detectado execução via curl pipe. Clonando repositório...${NC}"
+    TMP_DIR="$(mktemp -d)"
+    git clone --depth 1 https://github.com/emmanuelcandido/dotfiles.git "$TMP_DIR" 2>/dev/null || {
+        echo -e "${RED}Erro ao clonar repositório. Verifique conexão.${NC}"
+        exit 1
+    }
+    cd "$TMP_DIR/arch-dot-files"
+    exec bash restore-arch.sh "$@"
+fi
 RED='\033[0;31m'; GREEN='\033[0;32m'; YELLOW='\033[1;33m'; CYAN='\033[0;36m'; NC='\033[0m'
 
 export FULL_MODE=false
