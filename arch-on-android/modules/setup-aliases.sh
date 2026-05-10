@@ -73,14 +73,22 @@ proot-distro login archlinux \
         if [ -f /tmp/dotfiles-configs/arch-on-android/configs/i3/config ]; then
             mkdir -p "$HOME/.config/i3" "$HOME/.config/polybar/scripts" \
                      "$HOME/.config/dunst" "$HOME/.config/rofi" \
+                     "$HOME/.config/alacritty" "$HOME/.config/scripts" \
                      "$HOME/.config/wallpapers"
             cp /tmp/dotfiles-configs/arch-on-android/configs/i3/config                      "$HOME/.config/i3/config"
             cp /tmp/dotfiles-configs/arch-on-android/configs/polybar/config.ini             "$HOME/.config/polybar/config.ini"
             cp /tmp/dotfiles-configs/arch-on-android/configs/polybar/scripts/updates.sh     "$HOME/.config/polybar/scripts/updates.sh"
+            cp /tmp/dotfiles-configs/arch-on-android/configs/polybar/scripts/spotify.sh     "$HOME/.config/polybar/scripts/spotify.sh"
+            cp /tmp/dotfiles-configs/arch-on-android/configs/polybar/scripts/ticker-crypto.sh "$HOME/.config/polybar/scripts/ticker-crypto.sh"
             cp /tmp/dotfiles-configs/arch-on-android/configs/dunst/dunstrc                  "$HOME/.config/dunst/dunstrc"
             cp /tmp/dotfiles-configs/arch-on-android/configs/rofi/config.rasi               "$HOME/.config/rofi/config.rasi"
+            cp /tmp/dotfiles-configs/arch-on-android/configs/alacritty/alacritty.yml        "$HOME/.config/alacritty/alacritty.yml"
+            cp /tmp/dotfiles-configs/arch-on-android/configs/scripts/power.sh               "$HOME/.config/scripts/power.sh"
             cp /tmp/dotfiles-configs/arch-on-android/configs/wallpapers/0010.png            "$HOME/.config/wallpapers/0010.png"
             chmod +x "$HOME/.config/polybar/scripts/updates.sh" 2>/dev/null
+            chmod +x "$HOME/.config/polybar/scripts/spotify.sh" 2>/dev/null
+            chmod +x "$HOME/.config/polybar/scripts/ticker-crypto.sh" 2>/dev/null
+            chmod +x "$HOME/.config/scripts/power.sh" 2>/dev/null
         fi
         rm -rf /tmp/dotfiles-configs
 
@@ -128,15 +136,22 @@ git clone --depth 1 "$REPO_URL" "$TMP_REPO" 2>/dev/null || {
 }
 
 echo "Copiando configs..."
-mkdir -p "$HOME/.config/i3" "$HOME/.config/polybar/scripts" "$HOME/.config/dunst" "$HOME/.config/rofi" "$HOME/.config/wallpapers"
+mkdir -p "$HOME/.config/i3" "$HOME/.config/polybar/scripts" "$HOME/.config/dunst" "$HOME/.config/rofi" "$HOME/.config/alacritty" "$HOME/.config/scripts" "$HOME/.config/wallpapers"
 cp "$TMP_REPO/arch-on-android/configs/i3/config"                      "$HOME/.config/i3/config" 2>/dev/null
 cp "$TMP_REPO/arch-on-android/configs/polybar/config.ini"             "$HOME/.config/polybar/config.ini" 2>/dev/null
 cp "$TMP_REPO/arch-on-android/configs/polybar/scripts/updates.sh"     "$HOME/.config/polybar/scripts/updates.sh" 2>/dev/null
+cp "$TMP_REPO/arch-on-android/configs/polybar/scripts/spotify.sh"     "$HOME/.config/polybar/scripts/spotify.sh" 2>/dev/null
+cp "$TMP_REPO/arch-on-android/configs/polybar/scripts/ticker-crypto.sh" "$HOME/.config/polybar/scripts/ticker-crypto.sh" 2>/dev/null
 cp "$TMP_REPO/arch-on-android/configs/dunst/dunstrc"                  "$HOME/.config/dunst/dunstrc" 2>/dev/null
 cp "$TMP_REPO/arch-on-android/configs/rofi/config.rasi"               "$HOME/.config/rofi/config.rasi" 2>/dev/null
+cp "$TMP_REPO/arch-on-android/configs/alacritty/alacritty.yml"        "$HOME/.config/alacritty/alacritty.yml" 2>/dev/null
+cp "$TMP_REPO/arch-on-android/configs/scripts/power.sh"               "$HOME/.config/scripts/power.sh" 2>/dev/null
 cp "$TMP_REPO/arch-on-android/configs/wallpapers/0010.png"            "$HOME/.config/wallpapers/0010.png" 2>/dev/null
 
 chmod +x "$HOME/.config/polybar/scripts/updates.sh" 2>/dev/null
+chmod +x "$HOME/.config/polybar/scripts/spotify.sh" 2>/dev/null
+chmod +x "$HOME/.config/polybar/scripts/ticker-crypto.sh" 2>/dev/null
+chmod +x "$HOME/.config/scripts/power.sh" 2>/dev/null
 
 rm -rf "$TMP_REPO"
 echo "Configs aplicadas! Reinicie o i3: Mod+Shift+R"
