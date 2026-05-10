@@ -67,6 +67,17 @@ proot-distro login archlinux \
         export MESA_VK_WSI_PRESENT_MODE=immediate
         export ZINK_DESCRIPTORS=lazy
 
+        # Baixa configs mais recentes do repo
+        if [ -d /tmp/dotfiles-configs ]; then rm -rf /tmp/dotfiles-configs; fi
+        git clone --depth 1 https://github.com/emmanuelcandido/dotfiles.git /tmp/dotfiles-configs 2>/dev/null
+        if [ -f /tmp/dotfiles-configs/arch-on-android/configs/i3/config ]; then
+            cp /tmp/dotfiles-configs/arch-on-android/configs/i3/config "$HOME/.config/i3/config" 2>/dev/null
+            cp /tmp/dotfiles-configs/arch-on-android/configs/polybar/config.ini "$HOME/.config/polybar/config.ini" 2>/dev/null
+            cp /tmp/dotfiles-configs/arch-on-android/configs/dunst/dunstrc "$HOME/.config/dunst/dunstrc" 2>/dev/null
+            cp /tmp/dotfiles-configs/arch-on-android/configs/rofi/config.rasi "$HOME/.config/rofi/config.rasi" 2>/dev/null
+        fi
+        rm -rf /tmp/dotfiles-configs
+
         # Seta wallpaper (nord solid)
         command -v xsetroot >/dev/null 2>&1 || pacman -S --noconfirm xorg-xsetroot >/dev/null 2>&1
         xsetroot -solid '#2E3440' 2>/dev/null || true
@@ -92,6 +103,35 @@ pkill -9 -f "picom" 2>/dev/null
 echo "ArchDroid parado."
 STOPEOF
     chmod +x "${BIN_DIR}/stop-arch"
+
+    # ── apply-configs ──
+    cat > "${BIN_DIR}/apply-configs" << 'CONFIGSEOF'
+#!/data/data/com.termux/files/usr/bin/bash
+# apply-configs — Baixa e aplica dotfiles do repo no Arch proot
+# Uso: apply-configs
+# Nota: O start-arch já faz isso automaticamente.
+
+REPO_URL="https://github.com/emmanuelcandido/dotfiles.git"
+TMP_REPO="/tmp/dotfiles-configs"
+
+echo "Baixando configs do repositório..."
+rm -rf "$TMP_REPO" 2>/dev/null
+git clone --depth 1 "$REPO_URL" "$TMP_REPO" 2>/dev/null || {
+    echo "ERRO: Falha ao baixar repositório. Verifique conexão."
+    exit 1
+}
+
+echo "Copiando configs..."
+mkdir -p "$HOME/.config/i3" "$HOME/.config/polybar" "$HOME/.config/dunst" "$HOME/.config/rofi"
+cp "$TMP_REPO/arch-on-android/configs/i3/config" "$HOME/.config/i3/config" 2>/dev/null
+cp "$TMP_REPO/arch-on-android/configs/polybar/config.ini" "$HOME/.config/polybar/config.ini" 2>/dev/null
+cp "$TMP_REPO/arch-on-android/configs/dunst/dunstrc" "$HOME/.config/dunst/dunstrc" 2>/dev/null
+cp "$TMP_REPO/arch-on-android/configs/rofi/config.rasi" "$HOME/.config/rofi/config.rasi" 2>/dev/null
+
+rm -rf "$TMP_REPO"
+echo "Configs aplicadas! Reinicie o i3: Mod+Shift+R"
+CONFIGSEOF
+    chmod +x "${BIN_DIR}/apply-configs"
 
     # ── uninstall-arch ──
     cat > "${BIN_DIR}/uninstall-arch" << 'UNINSTALLEOF'
@@ -125,6 +165,7 @@ UNINSTALLEOF
     ln -sf "${BIN_DIR}/start-arch" "${HOME}/start-arch"
     ln -sf "${BIN_DIR}/stop-arch" "${HOME}/stop-arch"
     ln -sf "${BIN_DIR}/uninstall-arch" "${HOME}/uninstall-arch"
+    ln -sf "${BIN_DIR}/apply-configs" "${HOME}/apply-configs"
 
-    echo "[aliases] Comandos criados: start-arch, stop-arch, uninstall-arch"
+    echo "[aliases] Comandos criados: start-arch, stop-arch, uninstall-arch, apply-configs"
 }

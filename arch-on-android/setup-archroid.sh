@@ -19,13 +19,14 @@ mark_done() {
 clear_progress() {
     rm -f "$PROGRESS_FILE"
 }
+TOTAL_PHASES=6
 run_phase() {
     local num="$1" label="$2"; shift 2
     if phase_done "$num"; then
-        echo -e "${GREEN}[${num}/5] ${label}... ✓ (já concluído)${NC}"
+        echo -e "${GREEN}[${num}/${TOTAL_PHASES}] ${label}... ✓ (já concluído)${NC}"
         return 0
     fi
-    echo -e "${YELLOW}[${num}/5] ${label}...${NC}"
+    echo -e "${YELLOW}[${num}/${TOTAL_PHASES}] ${label}...${NC}"
     if "$@"; then
         mark_done "$num"
         echo -e "${GREEN}  ✓${NC}"
@@ -64,6 +65,9 @@ run_phase 2 "Instalando drivers GPU (Turnip/Zink)"   setup_turnip
 run_phase 3 "Configurando áudio (PulseAudio)"        setup_audio
 run_phase 4 "Instalando i3 + picom + ferramentas"    setup_i3
 run_phase 5 "Instalando apps e ferramentas"          setup_tools
+
+# ── Phase 6: Configs ──
+run_phase 6 "Aplicando configs (i3, polybar, dunst, rofi)" setup_configs
 
 # ── Aliases (sempre roda, sem checkpoint) ──
 echo ""

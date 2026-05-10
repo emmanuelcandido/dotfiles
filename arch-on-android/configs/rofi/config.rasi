@@ -1,0 +1,140 @@
+/* rofi config — ArchDroid (Nord theme) */
+
+configuration {
+    modi: "window,drun,run,combi";
+    font: "Noto Sans 10";
+    show-icons: true;
+    icon-theme: "Papirus";
+    terminal: "alacritty";
+    drun-display-format: "{name}";
+    combi-display-format: "{name}";
+    display-window: "Window";
+    display-drun: "Apps";
+    display-run: "Run";
+    display-combi: "All";
+    sidebar-mode: false;
+    prompt: ">";
+    line-margin: 8;
+    lines: 12;
+    columns: 1;
+    width: 40;
+    location: 0;
+    y-offset: 0;
+    x-offset: 0;
+    fixed-num-lines: true;
+    padding: 16;
+    spacing: 8;
+}
+
+* {
+    nord0:   #2E3440;
+    nord1:   #3B4252;
+    nord2:   #434C5E;
+    nord3:   #4C566A;
+    nord4:   #D8DEE9;
+    nord5:   #E5E9F0;
+    nord6:   #ECEFF4;
+    nord7:   #8FBCBB;
+    nord8:   #88C0D0;
+    nord9:   #81A1C1;
+    nord10:  #5E81AC;
+    nord11:  #BF616A;
+    nord12:  #D08770;
+    nord13:  #EBCB8B;
+    nord14:  #A3BE8C;
+    nord15:  #B48EAD;
+
+    background-color:     @nord0;
+    foreground-color:     @nord4;
+    background-color-alt: @nord1;
+    urgent-color:         @nord11;
+    selected-color:       @nord8;
+    border-color:         @nord3;
+    text-color:           @nord4;
+    text-color-alt:       @nord9;
+}
+
+window {
+    background-color: @background-color;
+    border: 2px;
+    border-color: @border-color;
+    border-radius: 8;
+}
+
+mainbox {
+    background-color: transparent;
+    padding: 16;
+}
+
+inputbar {
+    background-color: @background-color-alt;
+    border-radius: 6;
+    padding: 8;
+    children: [entry, prompt, case-indicator];
+}
+
+entry {
+    background-color: transparent;
+    text-color: @text-color;
+    placeholder-color: @text-color-alt;
+    padding: 4;
+}
+
+prompt {
+    background-color: @selected-color;
+    text-color: @background-color;
+    padding: 4 8;
+    border-radius: 4;
+}
+
+listview {
+    background-color: transparent;
+    padding: 8 0 0 0;
+    border: 0;
+    spacing: 4;
+}
+
+element {
+    background-color: transparent;
+    text-color: @text-color;
+    padding: 6 8;
+    border-radius: 6;
+}
+
+element selected {
+    background-color: @selected-color;
+    text-color: @background-color;
+}
+
+element normal {
+    background-color: transparent;
+    text-color: @text-color;
+}
+
+element urgent {
+    background-color: @urgent-color;
+    text-color: @nord6;
+}
+
+button {
+    background-color: @background-color-alt;
+    text-color: @text-color;
+    padding: 6;
+    border-radius: 6;
+}
+
+button selected {
+    background-color: @selected-color;
+    text-color: @background-color;
+}
+
+message {
+    background-color: transparent;
+    padding: 8 0 0 0;
+}
+
+textbox {
+    background-color: transparent;
+    text-color: @text-color-alt;
+    padding: 4;
+}

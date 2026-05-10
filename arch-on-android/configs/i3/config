@@ -1,0 +1,162 @@
+# i3 config — ArchDroid (proot-distro + Termux:X11)
+# Baseado nas preferências TWM: QWER focus, ASDF resize, Nord colors
+
+set $mod Mod4
+set $alt Mod1
+
+# ── Nord Colors ──
+set $nord0   #2E3440
+set $nord1   #3B4252
+set $nord2   #434C5E
+set $nord3   #4C566A
+set $nord4   #D8DEE9
+set $nord5   #E5E9F0
+set $nord6   #ECEFF4
+set $nord7   #8FBCBB
+set $nord8   #88C0D0
+set $nord9   #81A1C1
+set $nord10  #5E81AC
+set $nord11  #BF616A
+set $nord12  #D08770
+set $nord13  #EBCB8B
+set $nord14  #A3BE8C
+set $nord15  #B48EAD
+
+# ── Font ──
+font pango:Noto Sans 10
+
+# ── Modifier ──
+set $mod Mod4
+
+# ── Focus (QWER) ──
+bindsym $mod+q focus left
+bindsym $mod+w focus down
+bindsym $mod+e focus up
+bindsym $mod+r focus right
+
+# ── Move window (Shift + QWER) ──
+bindsym $mod+Shift+q move left
+bindsym $mod+Shift+w move down
+bindsym $mod+Shift+e move up
+bindsym $mod+Shift+r move right
+
+# ── Resize (ASDF) ──
+mode "resize" {
+    bindsym a resize shrink width 10 px or 10 ppt
+    bindsym s resize grow height 10 px or 10 ppt
+    bindsym d resize shrink height 10 px or 10 ppt
+    bindsym f resize grow width 10 px or 10 ppt
+    bindsym Escape mode "default"
+    bindsym Return mode "default"
+    bindsym $mod+c mode "default"
+}
+bindsym $mod+a mode "resize"
+
+# ── Stack/Tab navigation ──
+bindsym $alt+z layout stacking
+bindsym $alt+x layout default
+bindsym $alt+c layout tabbed
+bindsym $alt+v split toggle
+
+bindsym $mod+Tab focus right
+bindsym $mod+Shift+Tab focus left
+bindsym $mod+u focus parent
+bindsym $mod+Shift+u focus child
+
+# ── Fullscreen / Close ──
+bindsym $mod+t fullscreen toggle
+bindsym $mod+g kill
+
+# ── Scratchpad ──
+bindsym $mod+Shift+minus move scratchpad
+bindsym $mod+minus scratchpad show
+
+# ── Workspaces ──
+set $ws1 "1: Browser"
+set $ws2 "2: Obsidian"
+set $ws3 "3: Notion"
+set $ws4 "4: Calendar"
+set $ws5 "5: Files"
+set $ws6 "6: Messages"
+set $ws7 "7: Media"
+set $ws8 "8: Dev"
+set $ws9 "9: AI"
+
+workspace 1 output primary
+workspace 2 output primary
+workspace 3 output primary
+workspace 4 output primary
+workspace 5 output primary
+workspace 6 output primary
+workspace 7 output primary
+workspace 8 output primary
+workspace 9 output primary
+
+bindsym $mod+1 workspace $ws1
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+4 workspace $ws4
+bindsym $mod+5 workspace $ws5
+bindsym $mod+6 workspace $ws6
+bindsym $mod+7 workspace $ws7
+bindsym $mod+8 workspace $ws8
+bindsym $mod+9 workspace $ws9
+bindsym $mod+0 workspace $ws10
+
+bindsym $mod+Shift+1 move container to workspace $ws1
+bindsym $mod+Shift+2 move container to workspace $ws2
+bindsym $mod+Shift+3 move container to workspace $ws3
+bindsym $mod+Shift+4 move container to workspace $ws4
+bindsym $mod+Shift+5 move container to workspace $ws5
+bindsym $mod+Shift+6 move container to workspace $ws6
+bindsym $mod+Shift+7 move container to workspace $ws7
+bindsym $mod+Shift+8 move container to workspace $ws8
+bindsym $mod+Shift+9 move container to workspace $ws9
+bindsym $mod+Shift+0 move container to workspace $ws10
+
+# ── Gaps ──
+for_window [class="^.*"] border pixel 1
+gaps inner 8
+gaps outer 4
+smart_gaps on
+smart_borders on
+
+# ── Floating ──
+for_window [window_role="pop-up"] floating enable
+for_window [window_role="task_dialog"] floating enable
+for_window [class="(?i)flameshot"] floating enable
+for_window [class="(?i)pavucontrol"] floating enable
+for_window [class="(?i)copyq"] floating enable
+for_window [class="(?i)rofi"] floating enable
+for_window [class="(?i)polybar"] floating disable
+
+# ── Startup ──
+exec --no-startup-id polybar main
+exec --no-startup-id dunst
+exec --no-startup-id picom --config /etc/xdg/picom/picom.conf -b
+exec --no-startup-id feh --bg-fill '#2E3440' 2>/dev/null || true
+
+# ── Color scheme (Nord) ──
+# class                   border  backgr. text    indicator child_border
+client.focused            $nord8  $nord8  $nord6  $nord8   $nord8
+client.focused_inactive   $nord1  $nord1  $nord4  $nord1   $nord1
+client.unfocused          $nord1  $nord1  $nord4  $nord1   $nord1
+client.urgent             $nord11 $nord11 $nord6  $nord11  $nord11
+client.placeholder        $nord0  $nord0  $nord4  $nord0   $nord0
+client.background         $nord0
+
+# ── Bar (polybar gerenciado via polybar/config.ini) ──
+bar {
+    status_command i3status
+    position top
+    workspace_buttons yes
+    strip_workspace_numbers yes
+    colors {
+        background $nord0
+        statusline $nord4
+        focused_workspace  $nord8  $nord8  $nord6
+        active_workspace   $nord2  $nord2  $nord4
+        inactive_workspace $nord0  $nord0  $nord4
+        urgent_workspace   $nord11 $nord11 $nord6
+    }
+}
