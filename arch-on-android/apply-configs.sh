@@ -4,14 +4,15 @@
 # Nao instala pacotes — so atualiza configs para iteracao rapida
 
 REPO_URL="https://github.com/emmanuelcandido/dotfiles.git"
-TMP_REPO="/tmp/dotfiles-configs"
+TMP_REPO="${HOME}/.cache/apply-configs/dotfiles"
 
 echo "[apply] Baixando configs do repositorio..."
 rm -rf "$TMP_REPO" 2>/dev/null
-git clone --depth 1 "$REPO_URL" "$TMP_REPO" 2>/dev/null || {
-    echo "[apply] ERRO: Falha ao baixar repositorio. Verifique conexao."
+if ! git clone --depth 1 "$REPO_URL" "$TMP_REPO"; then
+    echo "[apply] ERRO: git clone falhou."
+    echo "[apply] Comando manual: git clone --depth 1 $REPO_URL $TMP_REPO"
     exit 1
-}
+fi
 
 echo "[apply] Copiando configs..."
 mkdir -p "$HOME/.config/i3" \

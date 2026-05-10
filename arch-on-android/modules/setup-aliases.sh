@@ -126,14 +126,15 @@ STOPEOF
 # Nota: O start-arch já faz isso automaticamente.
 
 REPO_URL="https://github.com/emmanuelcandido/dotfiles.git"
-TMP_REPO="/tmp/dotfiles-configs"
+TMP_REPO="${HOME}/.cache/apply-configs/dotfiles"
 
 echo "Baixando configs do repositório..."
 rm -rf "$TMP_REPO" 2>/dev/null
-git clone --depth 1 "$REPO_URL" "$TMP_REPO" 2>/dev/null || {
-    echo "ERRO: Falha ao baixar repositório. Verifique conexão."
+if ! git clone --depth 1 "$REPO_URL" "$TMP_REPO"; then
+    echo "ERRO: git clone falhou."
+    echo "Comando manual: git clone --depth 1 $REPO_URL $TMP_REPO"
     exit 1
-}
+fi
 
 echo "Copiando configs..."
 mkdir -p "$HOME/.config/i3" "$HOME/.config/polybar/scripts" "$HOME/.config/dunst" "$HOME/.config/rofi" "$HOME/.config/alacritty" "$HOME/.config/scripts" "$HOME/.config/wallpapers"
