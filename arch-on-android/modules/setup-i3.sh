@@ -23,6 +23,9 @@ setup_i3() {
     run_in_arch "mkdir -p /etc/xdg/picom && cat > /etc/xdg/picom/picom.conf << 'PICOM'
 backend = \"xrender\";
 corner-radius = 8;
+rounded-corners-exclude = [
+  \"class_g = 'polybar'\"
+];
 shadow = true;
 shadow-radius = 12;
 shadow-opacity = 0.4;
