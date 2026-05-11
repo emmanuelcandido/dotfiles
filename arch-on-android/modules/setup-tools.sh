@@ -17,7 +17,11 @@ setup_tools() {
     run_in_arch "
         pacman -S --noconfirm --needed base-devel git &&
         git clone https://aur.archlinux.org/pikaur.git /tmp/pikaur &&
-        cd /tmp/pikaur && makepkg -si --noconfirm &&
+        cd /tmp/pikaur &&
+        useradd -m builder 2>/dev/null || true &&
+        chown -R builder:builder /tmp/pikaur &&
+        su builder -c 'cd /tmp/pikaur && makepkg -si --noconfirm' &&
+        userdel -r builder 2>/dev/null || true &&
         rm -rf /tmp/pikaur
     " || echo "[tools] pikaur pulado (erro ao compilar)"
 
