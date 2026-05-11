@@ -13,7 +13,6 @@ setup_aliases() {
 termux-wake-lock 2>/dev/null || true
 
 export DISPLAY=:0
-export PULSE_SERVER=127.0.0.1
 
 # GPU config
 export MESA_NO_ERROR=1
@@ -54,6 +53,8 @@ sleep 3
 echo "[arch] Iniciando Arch Linux + i3..."
 echo "      Abra o app Termux:X11 para ver o desktop."
 echo "      Pressione Ctrl+C para parar."
+
+export PULSE_SERVER=127.0.0.1
 
 # Entra no proot com forwarding de áudio + GPU + X11
 proot-distro login archlinux \
@@ -221,7 +222,6 @@ CLIEOF
 termux-wake-lock 2>/dev/null || true
 
 export DISPLAY=:0
-export PULSE_SERVER=127.0.0.1
 
 # GPU config
 export MESA_NO_ERROR=1
