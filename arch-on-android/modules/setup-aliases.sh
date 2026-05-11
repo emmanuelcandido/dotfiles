@@ -195,5 +195,95 @@ UNINSTALLEOF
     ln -sf "${BIN_DIR}/uninstall-arch" "${HOME}/uninstall-arch"
     ln -sf "${BIN_DIR}/apply-configs" "${HOME}/apply-configs"
 
-    echo "[aliases] Comandos criados: start-arch, stop-arch, uninstall-arch, apply-configs"
+    # ── start-arch-cli ──
+    cat > "${BIN_DIR}/start-arch-cli" << 'CLIEOF'
+#!/data/data/com.termux/files/usr/bin/bash
+# start-arch-cli — Apenas login no Arch (sem X11)
+export PULSE_SERVER=127.0.0.1
+export MESA_NO_ERROR=1
+export MESA_GL_VERSION_OVERRIDE=4.6
+export GALLIUM_DRIVER=zink
+export MESA_LOADER_DRIVER_OVERRIDE=zink
+export TU_DEBUG=noconform
+export MESA_VK_WSI_PRESENT_MODE=immediate
+export ZINK_DESCRIPTORS=lazy
+
+exec proot-distro login archlinux --termux-home --shared-tmp
+CLIEOF
+    chmod +x "${BIN_DIR}/start-arch-cli"
+
+    # ── start-kde ──
+    cat > "${BIN_DIR}/start-kde" << 'KDEEOF'
+#!/data/data/com.termux/files/usr/bin/bash
+# start-kde — Inicia Arch Linux + KDE Plasma via Termux:X11
+
+export DISPLAY=:0
+export PULSE_SERVER=127.0.0.1
+
+# GPU config
+export MESA_NO_ERROR=1
+export MESA_GL_VERSION_OVERRIDE=4.6
+export GALLIUM_DRIVER=zink
+export MESA_LOADER_DRIVER_OVERRIDE=zink
+export TU_DEBUG=noconform
+export MESA_VK_WSI_PRESENT_MODE=immediate
+export ZINK_DESCRIPTORS=lazy
+
+cleanup() {
+    echo "Parando sessão..."
+    pkill -9 -f "termux.x11" 2>/dev/null
+    pkill -9 -f "pulseaudio" 2>/dev/null
+    exit 0
+}
+trap cleanup SIGINT SIGTERM
+
+# Inicia PulseAudio
+pulseaudio --check 2>/dev/null || {
+    echo "[audio] Iniciando PulseAudio..."
+    env -u PULSE_SERVER pulseaudio --start --exit-idle-time=-1
+    sleep 1
+    pactl load-module module-native-protocol-tcp auth-ip-acl=127.0.0.1 auth-anonymous=1 2>/dev/null
+}
+
+# Instala Termux:X11 se não existir
+command -v termux-x11 >/dev/null 2>&1 || {
+    echo "[x11] Instalando Termux:X11..."
+    pkg install -y termux-x11 2>/dev/null || true
+}
+
+echo "[x11] Iniciando Termux:X11..."
+termux-x11 :0 -ac &
+sleep 3
+
+echo "[kde] Iniciando Arch Linux + KDE Plasma..."
+echo "      Abra o app Termux:X11 para ver o desktop."
+echo "      Pressione Ctrl+C para parar."
+
+proot-distro login archlinux \
+    --termux-home \
+    --shared-tmp \
+    -- bash -c "
+        export DISPLAY=:0
+        export PULSE_SERVER=127.0.0.1
+        export MESA_NO_ERROR=1
+        export MESA_GL_VERSION_OVERRIDE=4.6
+        export GALLIUM_DRIVER=zink
+        export MESA_LOADER_DRIVER_OVERRIDE=zink
+        export TU_DEBUG=noconform
+        export MESA_VK_WSI_PRESENT_MODE=immediate
+        export ZINK_DESCRIPTORS=lazy
+        export DESKTOP_SESSION=plasma
+        export XDG_SESSION_DESKTOP=KDE
+        export XDG_CURRENT_DESKTOP=KDE
+
+        exec startplasma-x11 2>/dev/null
+    "
+KDEEOF
+    chmod +x "${BIN_DIR}/start-kde"
+
+    # Symlinks
+    ln -sf "${BIN_DIR}/start-kde" "${HOME}/start-kde"
+    ln -sf "${BIN_DIR}/start-arch-cli" "${HOME}/start-arch-cli"
+
+    echo "[aliases] Comandos criados: start-arch, start-arch-cli, start-kde, stop-arch, uninstall-arch, apply-configs"
 }
