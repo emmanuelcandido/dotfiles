@@ -45,7 +45,7 @@ command -v termux-x11 >/dev/null 2>&1 || {
 }
 
 echo "[x11] Iniciando Termux:X11..."
-termux-x11 :0 -ac -x 1920 -y 1080 &
+termux-x11 :0 -ac &
 sleep 3
 
 echo "[arch] Iniciando Arch Linux + i3..."
@@ -67,6 +67,9 @@ proot-distro login archlinux \
         export MESA_VK_WSI_PRESENT_MODE=immediate
         export ZINK_DESCRIPTORS=lazy
 
+        # Força 1080p (S20 Ultra é 1440x3200, drena GPU no proot)
+        xrandr -s 1920x1080 2>/dev/null || true
+
         # Baixa configs mais recentes do repo
         if [ -d /tmp/dotfiles-configs ]; then rm -rf /tmp/dotfiles-configs; fi
         git clone --depth 1 https://github.com/emmanuelcandido/dotfiles.git /tmp/dotfiles-configs 2>/dev/null
@@ -74,7 +77,7 @@ proot-distro login archlinux \
             mkdir -p "$HOME/.config/i3" "$HOME/.config/polybar/scripts" \
                      "$HOME/.config/dunst" "$HOME/.config/rofi" \
                      "$HOME/.config/alacritty" "$HOME/.config/scripts" \
-                     "$HOME/.config/wallpapers" "$HOME/.config/picom"
+                     "$HOME/.config/wallpapers"
             cp /tmp/dotfiles-configs/arch-on-android/configs/i3/config                      "$HOME/.config/i3/config"
             cp /tmp/dotfiles-configs/arch-on-android/configs/polybar/config.ini             "$HOME/.config/polybar/config.ini"
             cp /tmp/dotfiles-configs/arch-on-android/configs/polybar/scripts/updates.sh     "$HOME/.config/polybar/scripts/updates.sh"
@@ -83,7 +86,6 @@ proot-distro login archlinux \
             cp /tmp/dotfiles-configs/arch-on-android/configs/dunst/dunstrc                  "$HOME/.config/dunst/dunstrc"
             cp /tmp/dotfiles-configs/arch-on-android/configs/rofi/config.rasi               "$HOME/.config/rofi/config.rasi"
             cp /tmp/dotfiles-configs/arch-on-android/configs/alacritty/alacritty.yml        "$HOME/.config/alacritty/alacritty.yml"
-            cp /tmp/dotfiles-configs/arch-on-android/configs/picom/picom.conf               "$HOME/.config/picom/picom.conf"
             cp /tmp/dotfiles-configs/arch-on-android/configs/scripts/power.sh               "$HOME/.config/scripts/power.sh"
             cp /tmp/dotfiles-configs/arch-on-android/configs/wallpapers/0010.png            "$HOME/.config/wallpapers/0010.png"
             chmod +x "$HOME/.config/polybar/scripts/updates.sh" 2>/dev/null
@@ -96,9 +98,6 @@ proot-distro login archlinux \
         # Seta wallpaper (nord solid)
         command -v xsetroot >/dev/null 2>&1 || pacman -S --noconfirm xorg-xsetroot >/dev/null 2>&1
         xsetroot -solid '#2E3440' 2>/dev/null || true
-
-        # Inicia picom (xrender para proot)
-        picom --config /etc/xdg/picom/picom.conf -b 2>/dev/null || true
 
         # Inicia i3
         exec i3 2>/dev/null || exec i3-wm
@@ -138,7 +137,7 @@ if ! git clone --depth 1 "$REPO_URL" "$TMP_REPO"; then
 fi
 
 echo "Copiando configs..."
-mkdir -p "$HOME/.config/i3" "$HOME/.config/polybar/scripts" "$HOME/.config/dunst" "$HOME/.config/rofi" "$HOME/.config/alacritty" "$HOME/.config/scripts" "$HOME/.config/wallpapers" "$HOME/.config/picom"
+mkdir -p "$HOME/.config/i3" "$HOME/.config/polybar/scripts" "$HOME/.config/dunst" "$HOME/.config/rofi" "$HOME/.config/alacritty" "$HOME/.config/scripts" "$HOME/.config/wallpapers"
 cp "$TMP_REPO/arch-on-android/configs/i3/config"                      "$HOME/.config/i3/config" 2>/dev/null
 cp "$TMP_REPO/arch-on-android/configs/polybar/config.ini"             "$HOME/.config/polybar/config.ini" 2>/dev/null
 cp "$TMP_REPO/arch-on-android/configs/polybar/scripts/updates.sh"     "$HOME/.config/polybar/scripts/updates.sh" 2>/dev/null
@@ -147,7 +146,6 @@ cp "$TMP_REPO/arch-on-android/configs/polybar/scripts/ticker-crypto.sh" "$HOME/.
 cp "$TMP_REPO/arch-on-android/configs/dunst/dunstrc"                  "$HOME/.config/dunst/dunstrc" 2>/dev/null
 cp "$TMP_REPO/arch-on-android/configs/rofi/config.rasi"               "$HOME/.config/rofi/config.rasi" 2>/dev/null
 cp "$TMP_REPO/arch-on-android/configs/alacritty/alacritty.yml"        "$HOME/.config/alacritty/alacritty.yml" 2>/dev/null
-cp "$TMP_REPO/arch-on-android/configs/picom/picom.conf"               "$HOME/.config/picom/picom.conf" 2>/dev/null
 cp "$TMP_REPO/arch-on-android/configs/scripts/power.sh"               "$HOME/.config/scripts/power.sh" 2>/dev/null
 cp "$TMP_REPO/arch-on-android/configs/wallpapers/0010.png"            "$HOME/.config/wallpapers/0010.png" 2>/dev/null
 
@@ -252,7 +250,7 @@ command -v termux-x11 >/dev/null 2>&1 || {
 }
 
 echo "[x11] Iniciando Termux:X11..."
-termux-x11 :0 -ac -x 1920 -y 1080 &
+termux-x11 :0 -ac &
 sleep 3
 
 echo "[kde] Iniciando Arch Linux + KDE Plasma..."
