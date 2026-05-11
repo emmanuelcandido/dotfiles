@@ -21,8 +21,7 @@ mkdir -p "$HOME/.config/i3" \
          "$HOME/.config/rofi" \
          "$HOME/.config/alacritty" \
          "$HOME/.config/scripts" \
-         "$HOME/.config/wallpapers" \
-         "$HOME/.config/picom"
+         "$HOME/.config/wallpapers"
 
 cp "$TMP_REPO/arch-on-android/configs/i3/config"                      "$HOME/.config/i3/config"
 cp "$TMP_REPO/arch-on-android/configs/polybar/config.ini"             "$HOME/.config/polybar/config.ini"
@@ -32,7 +31,6 @@ cp "$TMP_REPO/arch-on-android/configs/polybar/scripts/ticker-crypto.sh" "$HOME/.
 cp "$TMP_REPO/arch-on-android/configs/dunst/dunstrc"                  "$HOME/.config/dunst/dunstrc"
 cp "$TMP_REPO/arch-on-android/configs/rofi/config.rasi"               "$HOME/.config/rofi/config.rasi"
 cp "$TMP_REPO/arch-on-android/configs/alacritty/alacritty.yml"        "$HOME/.config/alacritty/alacritty.yml"
-cp "$TMP_REPO/arch-on-android/configs/picom/picom.conf"               "$HOME/.config/picom/picom.conf"
 cp "$TMP_REPO/arch-on-android/configs/scripts/power.sh"               "$HOME/.config/scripts/power.sh"
 cp "$TMP_REPO/arch-on-android/configs/wallpapers/0010.png"            "$HOME/.config/wallpapers/0010.png"
 

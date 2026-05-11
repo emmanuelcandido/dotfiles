@@ -19,28 +19,5 @@ setup_i3() {
     run_in_arch "pacman -S --noconfirm --needed ttf-nerd-fonts-symbols ttf-font-awesome noto-fonts \
         noto-fonts-emoji ttf-dejavu" || echo "[i3] AVISO: Algumas fontes falharam"
 
-    echo "[i3] Configurando picom (xrender, sem rounded na polybar)..."
-    run_in_arch "mkdir -p /etc/xdg/picom && cat > /etc/xdg/picom/picom.conf << 'PICOM'
-backend = \"xrender\";
-corner-radius = 8;
-rounded-corners-exclude = [
-  \"class_g = 'polybar'\"
-];
-shadow = true;
-shadow-radius = 12;
-shadow-opacity = 0.4;
-fading = true;
-fade-in-step = 0.03;
-fade-out-step = 0.03;
-no-fading-openclose = true;
-inactive-opacity = 0.92;
-active-opacity = 1.0;
-opacity-rule = [
-  \"100:class_g = 'polybar'\",
-  \"100:class_g = 'rofi'\",
-  \"100:class_g = 'dunst'\"
-];
-PICOM" || echo "[i3] AVISO: Config picom falhou"
-
-    echo "[i3] i3 + picom instalados!"
+    echo "[i3] i3 instalado!"
 }

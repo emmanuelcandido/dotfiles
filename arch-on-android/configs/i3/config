@@ -187,7 +187,6 @@ bindsym $mod+Shift+6 move container to workspace $ws18; workspace $ws18
 # ── Startup ──
 exec_always --no-startup-id polybar main
 exec_always --no-startup-id dunst
-exec_always --no-startup-id picom --config /etc/xdg/picom/picom.conf -b
 exec_always --no-startup-id feh --bg-fill ~/.config/wallpapers/0010.png
 
 # ── Terminal ──
