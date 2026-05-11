@@ -10,6 +10,8 @@ setup_aliases() {
 #!/data/data/com.termux/files/usr/bin/bash
 # start-arch — Inicia Arch Linux + i3 via proot-distro + Termux:X11
 
+termux-wake-lock 2>/dev/null || true
+
 export DISPLAY=:0
 export PULSE_SERVER=127.0.0.1
 
@@ -26,6 +28,7 @@ cleanup() {
     echo "Parando sessão..."
     pkill -9 -f "termux.x11" 2>/dev/null
     pkill -9 -f "pulseaudio" 2>/dev/null
+    termux-wake-unlock 2>/dev/null || true
     exit 0
 }
 trap cleanup SIGINT SIGTERM
@@ -215,6 +218,8 @@ CLIEOF
 #!/data/data/com.termux/files/usr/bin/bash
 # start-kde — Inicia Arch Linux + KDE Plasma via Termux:X11
 
+termux-wake-lock 2>/dev/null || true
+
 export DISPLAY=:0
 export PULSE_SERVER=127.0.0.1
 
@@ -231,6 +236,7 @@ cleanup() {
     echo "Parando sessão..."
     pkill -9 -f "termux.x11" 2>/dev/null
     pkill -9 -f "pulseaudio" 2>/dev/null
+    termux-wake-unlock 2>/dev/null || true
     exit 0
 }
 trap cleanup SIGINT SIGTERM
