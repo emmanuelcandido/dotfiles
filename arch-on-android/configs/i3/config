@@ -187,6 +187,7 @@ bindsym $mod+Shift+6 move container to workspace $ws18; workspace $ws18
 # ── Startup ──
 exec_always --no-startup-id polybar main
 exec_always --no-startup-id dunst
+exec_always --no-startup-id picom --config /etc/xdg/picom/picom.conf -b
 exec_always --no-startup-id feh --bg-fill ~/.config/wallpapers/0010.png
 
 # ── Terminal ──
@@ -303,8 +304,6 @@ for_window [class="(?i)input-remapper"] floating enable
 for_window [class="^.*"] border pixel 1
 gaps inner 8
 gaps outer 4
-smart_gaps on
-smart_borders on
 
 # ── Window Resize Rules ──
 for_window [title="(?i)chatgpt"] resize set width 30 ppt
