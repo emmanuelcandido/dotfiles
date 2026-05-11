@@ -13,6 +13,14 @@ setup_tools() {
             openssh ufw
     " || echo "[tools] AVISO: Alguns pacotes podem estar indisponíveis"
 
+    echo "[tools] Instalando pikaur (AUR helper)..."
+    run_in_arch "
+        pacman -S --noconfirm --needed base-devel git &&
+        git clone https://aur.archlinux.org/pikaur.git /tmp/pikaur &&
+        cd /tmp/pikaur && makepkg -si --noconfirm &&
+        rm -rf /tmp/pikaur
+    " || echo "[tools] pikaur pulado (erro ao compilar)"
+
     echo "[tools] Instalando Chromium (pode usar ~700MB RAM)..."
     run_in_arch "pacman -S --noconfirm --needed chromium" || \
         echo "[tools] Chromium pulado (muita RAM para proot?)"
