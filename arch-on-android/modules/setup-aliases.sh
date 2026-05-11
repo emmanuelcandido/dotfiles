@@ -45,7 +45,7 @@ command -v termux-x11 >/dev/null 2>&1 || {
 }
 
 echo "[x11] Iniciando Termux:X11..."
-termux-x11 :0 -ac &
+termux-x11 :0 -ac -x 1920 -y 1080 &
 sleep 3
 
 echo "[arch] Iniciando Arch Linux + i3..."
@@ -252,7 +252,7 @@ command -v termux-x11 >/dev/null 2>&1 || {
 }
 
 echo "[x11] Iniciando Termux:X11..."
-termux-x11 :0 -ac &
+termux-x11 :0 -ac -x 1920 -y 1080 &
 sleep 3
 
 echo "[kde] Iniciando Arch Linux + KDE Plasma..."
