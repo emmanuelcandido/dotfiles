@@ -104,3 +104,7 @@ ulauncher         → nord0 + borda      — overlay
 2. **Nunca usar sombras.** Sem drop-shadows, sem `box-shadow`.
 3. **Bg sempre nord0 ou nord1.** Nunca branco (#FFFFFF) ou preto (#000000).
 4. **Ícones sempre Nerd Font.** Evitar emoji nativo ou ícones bitmap.
+
+## Alternativas futuras
+
+- **[linux_notification_center](https://github.com/phuhl/linux_notification_center)** — substituto futuro para dunst. Mesmo design system se aplica.
