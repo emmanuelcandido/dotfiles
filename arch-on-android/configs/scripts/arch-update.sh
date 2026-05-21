@@ -24,6 +24,7 @@ mkdir -p "$CONFIG_DIR/i3" \
          "$CONFIG_DIR/scripts" \
          "$CONFIG_DIR/wallpapers"
 
+cp "$TMP_DIR/arch-on-android/configs/bash_aliases"                    "$HOME/.bash_aliases" 2>/dev/null
 cp "$TMP_DIR/arch-on-android/configs/i3/config"                      "$CONFIG_DIR/i3/config" 2>/dev/null
 cp "$TMP_DIR/arch-on-android/configs/polybar/config.ini"             "$CONFIG_DIR/polybar/config.ini" 2>/dev/null
 cp "$TMP_DIR/arch-on-android/configs/polybar/scripts/updates.sh"     "$CONFIG_DIR/polybar/scripts/updates.sh" 2>/dev/null
@@ -43,6 +44,13 @@ chmod +x "$CONFIG_DIR/scripts/power.sh" 2>/dev/null
 chmod +x "$CONFIG_DIR/scripts/arch-update.sh" 2>/dev/null
 
 rm -rf "$TMP_DIR"
+
+# Garante que .bashrc source o .bash_aliases
+grep -q "bash_aliases" "$HOME/.bashrc" 2>/dev/null || {
+    echo "" >> "$HOME/.bashrc"
+    echo "# ArchDroid aliases" >> "$HOME/.bashrc"
+    echo "[ -f \"$HOME/.bash_aliases\" ] && . \"$HOME/.bash_aliases\"" >> "$HOME/.bashrc"
+}
 
 # Symlink arch-update pra /usr/local/bin (ou pro PATH)
 if [ -w /usr/local/bin ] 2>/dev/null; then

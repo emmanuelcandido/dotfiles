@@ -1,0 +1,53 @@
+# ArchDroid aliases
+# Instalado via arch-update — não editar manualmente
+
+# ── System ──
+alias ll='ls -l'
+alias la='ls -la'
+alias l='ls -CF'
+alias grep='grep --color=auto'
+alias ..='cd ..'
+alias ...='cd ../..'
+
+# ── Pacman (root — sem sudo no proot) ──
+alias upd='pacman -Syu'
+alias in='pacman -S'
+alias rem='pacman -Rns'
+alias srch='pacman -Ss'
+alias info='pacman -Qi'
+alias orphans='pacman -Qdt'
+alias clean='pacman -Sc'
+alias files='pacman -Ql'
+alias owns='pacman -Qo'
+alias lsdb='pacman -Sl'
+alias unlock='rm -f /var/lib/pacman/db.lck'
+
+# ── Paru/AUR ──
+alias aupd='paru -Syu'
+alias ain='paru -S'
+
+# ── Git ──
+alias gs='git status'
+alias ga='git add'
+alias gc='git commit'
+alias gp='git push'
+alias gl='git log --oneline --graph'
+alias gd='git diff'
+alias gpl='git pull'
+
+# ── Systemd (quando aplicável) ──
+alias svc='systemctl'
+alias svu='systemctl --user'
+
+# ── i3 ──
+alias i3restart='i3-msg restart'
+alias i3reload='i3-msg reload'
+
+# ── Utils ──
+alias cat='bat --paging=never'
+alias df='df -h'
+alias du='du -h'
+alias free='free -h'
+alias hx='helix'
+alias tree='tree -C'
+alias weather='curl -s wttr.in/Recife'
