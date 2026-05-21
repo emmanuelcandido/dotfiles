@@ -23,6 +23,7 @@
     text_icon_padding = 4
     frame_width = 2
     frame_color = "#88C0D0"
+    corner_radius = 0
     gap_between_messages = 4
     separator_color = frame
     sort = yes
@@ -53,13 +54,13 @@
     mouse_right_click = close_all
 
 [urgency_low]
-    background = "#3B4252"
+    background = "#2E3440"
     foreground = "#D8DEE9"
     timeout = 5
     frame_color = "#81A1C1"
 
 [urgency_normal]
-    background = "#3B4252"
+    background = "#2E3440"
     foreground = "#D8DEE9"
     timeout = 8
     frame_color = "#88C0D0"
