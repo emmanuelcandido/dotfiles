@@ -32,12 +32,14 @@ cp "$TMP_REPO/arch-on-android/configs/dunst/dunstrc"                  "$HOME/.co
 cp "$TMP_REPO/arch-on-android/configs/rofi/config.rasi"               "$HOME/.config/rofi/config.rasi"
 cp "$TMP_REPO/arch-on-android/configs/alacritty/alacritty.yml"        "$HOME/.config/alacritty/alacritty.yml"
 cp "$TMP_REPO/arch-on-android/configs/scripts/power.sh"               "$HOME/.config/scripts/power.sh"
+cp "$TMP_REPO/arch-on-android/configs/scripts/arch-update.sh"         "$HOME/.config/scripts/arch-update.sh"
 cp "$TMP_REPO/arch-on-android/configs/wallpapers/0010.png"            "$HOME/.config/wallpapers/0010.png"
 
 chmod +x "$HOME/.config/polybar/scripts/updates.sh" 2>/dev/null
 chmod +x "$HOME/.config/polybar/scripts/spotify.sh" 2>/dev/null
 chmod +x "$HOME/.config/polybar/scripts/ticker-crypto.sh" 2>/dev/null
 chmod +x "$HOME/.config/scripts/power.sh" 2>/dev/null
+chmod +x "$HOME/.config/scripts/arch-update.sh" 2>/dev/null
 
 # Atualiza aliases (start-arch, stop-arch, apply-configs, etc.)
 if [ -f "$TMP_REPO/arch-on-android/modules/setup-aliases.sh" ]; then

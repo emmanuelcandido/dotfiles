@@ -99,11 +99,19 @@ proot-distro login archlinux \
             cp /tmp/dotfiles-configs/arch-on-android/configs/rofi/config.rasi               "$HOME/.config/rofi/config.rasi"
             cp /tmp/dotfiles-configs/arch-on-android/configs/alacritty/alacritty.yml        "$HOME/.config/alacritty/alacritty.yml"
             cp /tmp/dotfiles-configs/arch-on-android/configs/scripts/power.sh               "$HOME/.config/scripts/power.sh"
+            cp /tmp/dotfiles-configs/arch-on-android/configs/scripts/arch-update.sh         "$HOME/.config/scripts/arch-update.sh"
             cp /tmp/dotfiles-configs/arch-on-android/configs/wallpapers/0010.png            "$HOME/.config/wallpapers/0010.png"
             chmod +x "$HOME/.config/polybar/scripts/updates.sh" 2>/dev/null
             chmod +x "$HOME/.config/polybar/scripts/spotify.sh" 2>/dev/null
             chmod +x "$HOME/.config/polybar/scripts/ticker-crypto.sh" 2>/dev/null
             chmod +x "$HOME/.config/scripts/power.sh" 2>/dev/null
+            chmod +x "$HOME/.config/scripts/arch-update.sh" 2>/dev/null
+            # Cria alias arch-update se nao existir
+            grep -q "arch-update" "$HOME/.bashrc" 2>/dev/null || {
+                echo "alias arch-update='$HOME/.config/scripts/arch-update.sh'" >> "$HOME/.bashrc"
+            }
+            # Cria symlink no PATH se possivel
+            ln -sf "$HOME/.config/scripts/arch-update.sh" /usr/local/bin/arch-update 2>/dev/null || true
         fi
         rm -rf /tmp/dotfiles-configs
 
