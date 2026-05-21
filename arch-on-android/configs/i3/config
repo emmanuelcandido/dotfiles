@@ -90,23 +90,15 @@ bindsym $mod+Shift+d move workspace to output left
 bindsym $mod+Shift+s move workspace to output down
 bindsym $mod+Shift+w move workspace to output up
 
-# ── Resize mode (ASDF) ──
-mode "resize" {
-    bindsym a resize shrink width 10 px or 10 ppt
-    bindsym s resize grow height 10 px or 10 ppt
-    bindsym d resize shrink height 10 px or 10 ppt
-    bindsym f resize grow width 10 px or 10 ppt
-    bindsym Escape mode "default"
-    bindsym Return mode "default"
-    bindsym $mod+c mode "default"
-}
-bindsym $mod+a mode "resize"
-
-# ── Resize (u/i/o/p) ──
-bindsym $mod+u resize shrink width 10 px or 10 ppt
-bindsym $mod+i resize grow height 10 px or 10 ppt
+# ── Resize (direto, sem mode toggle) ──
+# a/s = shrink/grow largura · o/p = shrink/grow altura
+# u/i = shrink largura / grow altura (alternativo)
+bindsym $mod+a resize shrink width 10 px or 10 ppt
+bindsym $mod+s resize grow height 10 px or 10 ppt
 bindsym $mod+o resize shrink height 10 px or 10 ppt
 bindsym $mod+p resize grow width 10 px or 10 ppt
+bindsym $mod+u resize shrink width 10 px or 10 ppt
+bindsym $mod+i resize grow height 10 px or 10 ppt
 
 # ── Layout ──
 bindsym $mod+h split horizontal
@@ -231,7 +223,8 @@ bindsym $alt+F11 exec code
 bindsym $alt+F12 exec gtk-launch WebApp-Chatbox2077.desktop
 bindsym $alt+x exec curl "127.0.0.1:60828/selection_translate"
 bindsym Control+F12 exec curl "127.0.0.1:60828/input_translate"
-bindsym Control+space exec rofi -show drun -show-icons
+bindsym Control+space exec vicinae
+bindsym Control+Shift+space exec ulauncher
 
 # ── Screenshots ──
 bindsym Print exec flameshot gui
