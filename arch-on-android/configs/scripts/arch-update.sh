@@ -20,6 +20,7 @@ mkdir -p "$CONFIG_DIR/i3" \
          "$CONFIG_DIR/polybar/scripts" \
          "$CONFIG_DIR/dunst" \
          "$CONFIG_DIR/rofi" \
+         "$CONFIG_DIR/ulauncher/user-themes/nord" \
          "$CONFIG_DIR/alacritty" \
          "$CONFIG_DIR/scripts" \
          "$CONFIG_DIR/wallpapers"
@@ -36,6 +37,7 @@ cp "$TMP_DIR/arch-on-android/configs/alacritty/alacritty.yml"        "$CONFIG_DI
 cp "$TMP_DIR/arch-on-android/configs/scripts/power.sh"               "$CONFIG_DIR/scripts/power.sh" 2>/dev/null
 cp "$TMP_DIR/arch-on-android/configs/scripts/arch-update.sh"         "$CONFIG_DIR/scripts/arch-update.sh" 2>/dev/null
 cp "$TMP_DIR/arch-on-android/configs/wallpapers/0010.png"            "$CONFIG_DIR/wallpapers/0010.png" 2>/dev/null
+cp "$TMP_DIR/arch-on-android/configs/ulauncher/nord/"*               "$CONFIG_DIR/ulauncher/user-themes/nord/" 2>/dev/null
 
 chmod +x "$CONFIG_DIR/polybar/scripts/updates.sh" 2>/dev/null
 chmod +x "$CONFIG_DIR/polybar/scripts/spotify.sh" 2>/dev/null
