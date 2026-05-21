@@ -39,6 +39,12 @@ chmod +x "$HOME/.config/polybar/scripts/spotify.sh" 2>/dev/null
 chmod +x "$HOME/.config/polybar/scripts/ticker-crypto.sh" 2>/dev/null
 chmod +x "$HOME/.config/scripts/power.sh" 2>/dev/null
 
+# Atualiza aliases (start-arch, stop-arch, apply-configs, etc.)
+if [ -f "$TMP_REPO/arch-on-android/modules/setup-aliases.sh" ]; then
+    source "$TMP_REPO/arch-on-android/modules/setup-aliases.sh"
+    setup_aliases
+fi
+
 rm -rf "$TMP_REPO"
 
 echo "[apply] Configs aplicadas!"

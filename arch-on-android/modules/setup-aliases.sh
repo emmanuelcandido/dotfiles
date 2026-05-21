@@ -49,12 +49,20 @@ command -v termux-x11 >/dev/null 2>&1 || {
 echo "[x11] Iniciando Termux:X11..."
 termux-x11 :0 -ac &
 sleep 3
+# Abre o app Termux:X11 automaticamente na tela
+am start -n com.termux.x11/.MainActivity 2>/dev/null || true
 
 echo "[arch] Iniciando Arch Linux + i3..."
-echo "      Abra o app Termux:X11 para ver o desktop."
+echo "      Termux:X11 aberto automaticamente."
 echo "      Pressione Ctrl+C para parar."
 
 export PULSE_SERVER=127.0.0.1
+
+# Auto-start Arch MCP Server se instalado
+if [ -f "${HOME}/.arch-mcp/start.sh" ]; then
+    echo "[mcp] Iniciando Arch MCP Server..."
+    bash "${HOME}/.arch-mcp/start.sh" 2>/dev/null || true
+fi
 
 # Entra no proot com forwarding de áudio + GPU + X11
 proot-distro login archlinux \
@@ -118,6 +126,7 @@ pkill -9 -f "proot-distro login archlinux" 2>/dev/null
 pkill -9 -f "termux.x11" 2>/dev/null
 pkill -9 -f "pulseaudio" 2>/dev/null
 pkill -9 -f "picom" 2>/dev/null
+termux-wake-unlock 2>/dev/null || true
 echo "ArchDroid parado."
 STOPEOF
     chmod +x "${BIN_DIR}/stop-arch"
