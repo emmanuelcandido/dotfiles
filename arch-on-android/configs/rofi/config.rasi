@@ -4,7 +4,7 @@ configuration {
     modi: "window,drun,run,combi";
     font: "Noto Sans 10";
     show-icons: true;
-    icon-theme: "Papirus";
+    icon-theme: "Nordzy";
     terminal: "alacritty";
     drun-display-format: "{name}";
     combi-display-format: "{name}";
@@ -58,7 +58,6 @@ window {
     background-color: @background-color;
     border: 2px;
     border-color: @border-color;
-    border-radius: 8;
 }
 
 mainbox {
@@ -68,7 +67,6 @@ mainbox {
 
 inputbar {
     background-color: @background-color-alt;
-    border-radius: 6;
     padding: 8;
     children: [entry, prompt, case-indicator];
 }
@@ -84,7 +82,6 @@ prompt {
     background-color: @selected-color;
     text-color: @background-color;
     padding: 4 8;
-    border-radius: 4;
 }
 
 listview {
@@ -98,7 +95,6 @@ element {
     background-color: transparent;
     text-color: @text-color;
     padding: 6 8;
-    border-radius: 6;
 }
 
 element selected {
@@ -120,7 +116,6 @@ button {
     background-color: @background-color-alt;
     text-color: @text-color;
     padding: 6;
-    border-radius: 6;
 }
 
 button selected {

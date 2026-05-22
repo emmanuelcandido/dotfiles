@@ -8,7 +8,7 @@ configuration {
   display-drun: "   Apps";
   display-run: "   Run";
   sidebar-mode: false;
-  icon-theme: "Papirus";
+  icon-theme: "Nordzy";
 }
 
 * {

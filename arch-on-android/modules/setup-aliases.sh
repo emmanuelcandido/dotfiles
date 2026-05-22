@@ -84,9 +84,13 @@ proot-distro login archlinux \
         # Força 1080p (S20 Ultra é 1440x3200, drena GPU no proot)
         xrandr -s 1920x1080 2>/dev/null || true
 
-        # Baixa configs mais recentes do repo
-        if [ -d /tmp/dotfiles-configs ]; then rm -rf /tmp/dotfiles-configs; fi
-        git clone --depth 1 https://github.com/emmanuelcandido/dotfiles.git /tmp/dotfiles-configs 2>/dev/null
+        # Atualiza configs do repo (pull incremental, ignora se sem internet)
+        if [ -d /tmp/dotfiles-configs/.git ]; then
+            cd /tmp/dotfiles-configs && git pull --depth 1 --ff-only 2>/dev/null || true
+        else
+            rm -rf /tmp/dotfiles-configs 2>/dev/null
+            git clone --depth 1 https://github.com/emmanuelcandido/dotfiles.git /tmp/dotfiles-configs 2>/dev/null
+        fi
         if [ -f /tmp/dotfiles-configs/arch-on-android/configs/i3/config ]; then
             mkdir -p "$HOME/.config/i3" "$HOME/.config/polybar/scripts" \
                      "$HOME/.config/dunst" "$HOME/.config/rofi" \

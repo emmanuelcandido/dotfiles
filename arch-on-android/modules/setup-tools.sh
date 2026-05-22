@@ -18,6 +18,15 @@ setup_tools() {
         pacman -S --noconfirm --needed kvantum qt5ct
     " || echo "[tools] AVISO: Ferramentas de tema indisponíveis"
 
+    echo "[tools] Instalando Nordzy-icon-theme..."
+    run_in_arch "
+        cd /tmp &&
+        curl -sL https://api.github.com/repos/MolassesLover/Nordzy-icon/releases/latest |
+        grep tarball_url | cut -d'\"' -f4 | xargs curl -sL | tar xz &&
+        cd Nordzy-icon-*/ &&
+        bash install.sh
+    " || echo "[tools] AVISO: Nordzy-icons pulado (erro ao instalar)"
+
     echo "[tools] Instalando pikaur (AUR helper)..."
     run_in_arch "
         pacman -S --noconfirm --needed base-devel git &&
