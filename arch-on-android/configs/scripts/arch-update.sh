@@ -61,7 +61,4 @@ if [ -w /usr/local/bin ] 2>/dev/null; then
     ln -sf "$CONFIG_DIR/scripts/arch-update.sh" /usr/local/bin/arch-update 2>/dev/null
 fi
 
-echo "[update] OK — configs atualizadas. Reiniciando i3..."
-# i3-msg nao funciona de outro proot login (socket isolado)
-# Usa SIGHUP pra recarregar config, SIGUSR1 pra restart completo
-pkill -HUP i3 2>/dev/null || pkill -USR1 i3 2>/dev/null || true
+echo "[update] OK — configs atualizadas. Use $mod+Shift+c pra recarregar ou reinicie a sessão."
