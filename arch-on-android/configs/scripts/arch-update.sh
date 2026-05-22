@@ -36,6 +36,7 @@ cp "$TMP_DIR/arch-on-android/configs/rofi/config.rasi"               "$CONFIG_DI
 cp "$TMP_DIR/arch-on-android/configs/alacritty/alacritty.yml"        "$CONFIG_DIR/alacritty/alacritty.yml" 2>/dev/null
 cp "$TMP_DIR/arch-on-android/configs/scripts/power.sh"               "$CONFIG_DIR/scripts/power.sh" 2>/dev/null
 cp "$TMP_DIR/arch-on-android/configs/scripts/arch-update.sh"         "$CONFIG_DIR/scripts/arch-update.sh" 2>/dev/null
+cp "$TMP_DIR/arch-on-android/configs/scripts/notif-center.sh"       "$CONFIG_DIR/scripts/notif-center.sh" 2>/dev/null
 cp "$TMP_DIR/arch-on-android/configs/wallpapers/0010.png"            "$CONFIG_DIR/wallpapers/0010.png" 2>/dev/null
 cp "$TMP_DIR/arch-on-android/configs/ulauncher/nord/"*               "$CONFIG_DIR/ulauncher/user-themes/nord/" 2>/dev/null
 
@@ -44,6 +45,7 @@ chmod +x "$CONFIG_DIR/polybar/scripts/spotify.sh" 2>/dev/null
 chmod +x "$CONFIG_DIR/polybar/scripts/ticker-crypto.sh" 2>/dev/null
 chmod +x "$CONFIG_DIR/scripts/power.sh" 2>/dev/null
 chmod +x "$CONFIG_DIR/scripts/arch-update.sh" 2>/dev/null
+chmod +x "$CONFIG_DIR/scripts/notif-center.sh" 2>/dev/null
 
 rm -rf "$TMP_DIR"
 
