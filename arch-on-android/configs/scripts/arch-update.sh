@@ -62,4 +62,6 @@ if [ -w /usr/local/bin ] 2>/dev/null; then
 fi
 
 echo "[update] OK — configs atualizadas. Reiniciando i3..."
-i3-msg restart 2>/dev/null || true
+# i3-msg nao funciona de outro proot login (socket isolado)
+# Usa SIGHUP pra recarregar config, SIGUSR1 pra restart completo
+pkill -HUP i3 2>/dev/null || pkill -USR1 i3 2>/dev/null || true
