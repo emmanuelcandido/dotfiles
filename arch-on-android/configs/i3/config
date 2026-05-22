@@ -223,8 +223,9 @@ bindsym $alt+F11 exec code
 bindsym $alt+F12 exec gtk-launch WebApp-Chatbox2077.desktop
 bindsym $alt+x exec curl "127.0.0.1:60828/selection_translate"
 bindsym Control+F12 exec curl "127.0.0.1:60828/input_translate"
-bindsym Control+space exec vicinae
-bindsym Control+Shift+space exec ulauncher
+bindsym Control+space exec rofi -show drun -show-icons
+bindsym Control+Shift+space exec vicinae
+bindsym Control+Mod1+space exec ulauncher
 
 # ── Screenshots ──
 bindsym Print exec flameshot gui
