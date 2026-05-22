@@ -119,6 +119,10 @@ proot-distro login archlinux \
         command -v xsetroot >/dev/null 2>&1 || pacman -S --noconfirm xorg-xsetroot >/dev/null 2>&1
         xsetroot -solid '#2E3440' 2>/dev/null || true
 
+        # Inicia sessão D-Bus (necessário pra ulauncher)
+        eval $(dbus-launch 2>/dev/null)
+        export DBUS_SESSION_BUS_ADDRESS
+
         # Inicia i3
         exec i3 2>/dev/null || exec i3-wm
     "
