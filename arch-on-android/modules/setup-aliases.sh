@@ -92,32 +92,32 @@ proot-distro login archlinux \
             git clone --depth 1 https://github.com/emmanuelcandido/dotfiles.git /tmp/dotfiles-configs 2>/dev/null
         fi
         if [ -f /tmp/dotfiles-configs/arch-on-android/configs/i3/config ]; then
-            mkdir -p "$HOME/.config/i3" "$HOME/.config/polybar/scripts" \
-                     "$HOME/.config/dunst" "$HOME/.config/rofi" \
-                     "$HOME/.config/alacritty" "$HOME/.config/scripts" \
-                     "$HOME/.config/wallpapers"
-            cp /tmp/dotfiles-configs/arch-on-android/configs/i3/config                      "$HOME/.config/i3/config"
-            cp /tmp/dotfiles-configs/arch-on-android/configs/polybar/config.ini             "$HOME/.config/polybar/config.ini"
-            cp /tmp/dotfiles-configs/arch-on-android/configs/polybar/scripts/updates.sh     "$HOME/.config/polybar/scripts/updates.sh"
-            cp /tmp/dotfiles-configs/arch-on-android/configs/polybar/scripts/spotify.sh     "$HOME/.config/polybar/scripts/spotify.sh"
-            cp /tmp/dotfiles-configs/arch-on-android/configs/polybar/scripts/ticker-crypto.sh "$HOME/.config/polybar/scripts/ticker-crypto.sh"
-            cp /tmp/dotfiles-configs/arch-on-android/configs/dunst/dunstrc                  "$HOME/.config/dunst/dunstrc"
-            cp /tmp/dotfiles-configs/arch-on-android/configs/rofi/config.rasi               "$HOME/.config/rofi/config.rasi"
-            cp /tmp/dotfiles-configs/arch-on-android/configs/alacritty/alacritty.yml        "$HOME/.config/alacritty/alacritty.yml"
-            cp /tmp/dotfiles-configs/arch-on-android/configs/scripts/power.sh               "$HOME/.config/scripts/power.sh"
-            cp /tmp/dotfiles-configs/arch-on-android/configs/scripts/arch-update.sh         "$HOME/.config/scripts/arch-update.sh"
-            cp /tmp/dotfiles-configs/arch-on-android/configs/wallpapers/0010.png            "$HOME/.config/wallpapers/0010.png"
-            chmod +x "$HOME/.config/polybar/scripts/updates.sh" 2>/dev/null
-            chmod +x "$HOME/.config/polybar/scripts/spotify.sh" 2>/dev/null
-            chmod +x "$HOME/.config/polybar/scripts/ticker-crypto.sh" 2>/dev/null
-            chmod +x "$HOME/.config/scripts/power.sh" 2>/dev/null
-            chmod +x "$HOME/.config/scripts/arch-update.sh" 2>/dev/null
+            mkdir -p \"$HOME/.config/i3\" \"$HOME/.config/polybar/scripts\" \
+                     \"$HOME/.config/dunst\" \"$HOME/.config/rofi\" \
+                     \"$HOME/.config/alacritty\" \"$HOME/.config/scripts\" \
+                     \"$HOME/.config/wallpapers\"
+            cp /tmp/dotfiles-configs/arch-on-android/configs/i3/config                      \"$HOME/.config/i3/config\"
+            cp /tmp/dotfiles-configs/arch-on-android/configs/polybar/config.ini             \"$HOME/.config/polybar/config.ini\"
+            cp /tmp/dotfiles-configs/arch-on-android/configs/polybar/scripts/updates.sh     \"$HOME/.config/polybar/scripts/updates.sh\"
+            cp /tmp/dotfiles-configs/arch-on-android/configs/polybar/scripts/spotify.sh     \"$HOME/.config/polybar/scripts/spotify.sh\"
+            cp /tmp/dotfiles-configs/arch-on-android/configs/polybar/scripts/ticker-crypto.sh \"$HOME/.config/polybar/scripts/ticker-crypto.sh\"
+            cp /tmp/dotfiles-configs/arch-on-android/configs/dunst/dunstrc                  \"$HOME/.config/dunst/dunstrc\"
+            cp /tmp/dotfiles-configs/arch-on-android/configs/rofi/config.rasi               \"$HOME/.config/rofi/config.rasi\"
+            cp /tmp/dotfiles-configs/arch-on-android/configs/alacritty/alacritty.yml        \"$HOME/.config/alacritty/alacritty.yml\"
+            cp /tmp/dotfiles-configs/arch-on-android/configs/scripts/power.sh               \"$HOME/.config/scripts/power.sh\"
+            cp /tmp/dotfiles-configs/arch-on-android/configs/scripts/arch-update.sh         \"$HOME/.config/scripts/arch-update.sh\"
+            cp /tmp/dotfiles-configs/arch-on-android/configs/wallpapers/0010.png            \"$HOME/.config/wallpapers/0010.png\"
+            chmod +x \"$HOME/.config/polybar/scripts/updates.sh\" 2>/dev/null
+            chmod +x \"$HOME/.config/polybar/scripts/spotify.sh\" 2>/dev/null
+            chmod +x \"$HOME/.config/polybar/scripts/ticker-crypto.sh\" 2>/dev/null
+            chmod +x \"$HOME/.config/scripts/power.sh\" 2>/dev/null
+            chmod +x \"$HOME/.config/scripts/arch-update.sh\" 2>/dev/null
             # Cria alias arch-update se nao existir
-            grep -q "arch-update" "$HOME/.bashrc" 2>/dev/null || {
-                echo "alias arch-update='$HOME/.config/scripts/arch-update.sh'" >> "$HOME/.bashrc"
+            grep -q \"arch-update\" \"$HOME/.bashrc\" 2>/dev/null || {
+                echo \"alias arch-update='$HOME/.config/scripts/arch-update.sh'\" >> \"$HOME/.bashrc\"
             }
             # Cria symlink no PATH se possivel
-            ln -sf "$HOME/.config/scripts/arch-update.sh" /usr/local/bin/arch-update 2>/dev/null || true
+            ln -sf \"$HOME/.config/scripts/arch-update.sh\" /usr/local/bin/arch-update 2>/dev/null || true
         fi
         rm -rf /tmp/dotfiles-configs
 
