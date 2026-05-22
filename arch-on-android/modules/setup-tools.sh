@@ -13,6 +13,11 @@ setup_tools() {
             openssh ufw
     " || echo "[tools] AVISO: Alguns pacotes podem estar indisponíveis"
 
+    echo "[tools] Instalando ferramentas de tema..."
+    run_in_arch "
+        pacman -S --noconfirm --needed kvantum qt5ct
+    " || echo "[tools] AVISO: Ferramentas de tema indisponíveis"
+
     echo "[tools] Instalando pikaur (AUR helper)..."
     run_in_arch "
         pacman -S --noconfirm --needed base-devel git &&

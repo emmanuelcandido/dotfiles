@@ -71,6 +71,8 @@ proot-distro login archlinux \
     -- bash -c "
         export DISPLAY=:0
         export PULSE_SERVER=127.0.0.1
+        export QT_STYLE_OVERRIDE=kvantum
+        export QT_QPA_PLATFORMTHEME=qt5ct
         export MESA_NO_ERROR=1
         export MESA_GL_VERSION_OVERRIDE=4.6
         export GALLIUM_DRIVER=zink
@@ -290,6 +292,8 @@ proot-distro login archlinux \
     -- bash -c "
         export DISPLAY=:0
         export PULSE_SERVER=127.0.0.1
+        export QT_STYLE_OVERRIDE=kvantum
+        export QT_QPA_PLATFORMTHEME=qt5ct
         export MESA_NO_ERROR=1
         export MESA_GL_VERSION_OVERRIDE=4.6
         export GALLIUM_DRIVER=zink
