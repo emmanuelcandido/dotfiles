@@ -65,10 +65,15 @@ if command -v thefuck &>/dev/null; then
     eval "$(thefuck --alias)"
 fi
 
-# ── Proot Aliases ──
-if [[ -f ~/.config/scripts/proot-aliases.sh ]]; then
-    source ~/.config/scripts/proot-aliases.sh
+# ── Proot Aliases (do GitHub) ──
+_ALIASES_SRC="${HOME}/.config/scripts/proot-aliases.sh"
+if [[ ! -f "$_ALIASES_SRC" ]]; then
+    mkdir -p "${HOME}/.config/scripts"
+    curl -fsSL "https://raw.githubusercontent.com/emmanuelcandido/dotfiles/main/arch-on-android/configs/scripts/proot-aliases.sh" -o "$_ALIASES_SRC" 2>/dev/null
+    chmod +x "$_ALIASES_SRC" 2>/dev/null
 fi
+[[ -f "$_ALIASES_SRC" ]] && source "$_ALIASES_SRC"
+unset _ALIASES_SRC
 
 # ── Bat ──
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
