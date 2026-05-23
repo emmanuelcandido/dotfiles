@@ -44,9 +44,9 @@ configuration {
     nord14:  #A3BE8C;
     nord15:  #B48EAD;
 
-    background-color:     @nord0;
+    background-color:     @nord1;
     foreground-color:     @nord4;
-    background-color-alt: @nord1;
+    background-color-alt: @nord2;
     urgent-color:         @nord11;
     selected-color:       @nord8;
     border-color:         @nord3;
