@@ -118,6 +118,8 @@ proot-distro login archlinux \
             }
             # Cria symlink no PATH se possivel
             ln -sf \"$HOME/.config/scripts/arch-update.sh\" /usr/local/bin/arch-update 2>/dev/null || true
+            # Atualiza cache de icones Nordzy
+            gtk-update-icon-cache /usr/share/icons/Nordzy 2>/dev/null || true
         fi
         rm -rf /tmp/dotfiles-configs
 

@@ -103,13 +103,31 @@ element selected {
 }
 
 element normal {
-    background-color: transparent;
+    background-color: @nord0;
     text-color: @text-color;
 }
 
 element urgent {
     background-color: @urgent-color;
     text-color: @nord6;
+}
+
+element-icon {
+    size: 24px;
+    background-color: transparent;
+    padding: 0 8 0 0;
+}
+
+element-text {
+    background-color: transparent;
+    text-color: inherit;
+    vertical-align: 0.5;
+}
+
+scrollbar {
+    handle-color: @nord3;
+    handle-width: 6px;
+    background-color: @nord0;
 }
 
 button {
