@@ -106,6 +106,7 @@ proot-distro login archlinux \
             cp /tmp/dotfiles-configs/arch-on-android/configs/alacritty/alacritty.yml        \"$HOME/.config/alacritty/alacritty.yml\"
             cp /tmp/dotfiles-configs/arch-on-android/configs/scripts/power.sh               \"$HOME/.config/scripts/power.sh\"
             cp /tmp/dotfiles-configs/arch-on-android/configs/scripts/arch-update.sh         \"$HOME/.config/scripts/arch-update.sh\"
+            cp /tmp/dotfiles-configs/arch-on-android/configs/scripts/proot-aliases.sh       \"$HOME/.config/scripts/proot-aliases.sh\"
             cp /tmp/dotfiles-configs/arch-on-android/configs/wallpapers/0010.png            \"$HOME/.config/wallpapers/0010.png\"
             cp /tmp/dotfiles-configs/arch-on-android/configs/zsh/zshrc                      \"$HOME/.zshrc\"
             cp /tmp/dotfiles-configs/arch-on-android/configs/starship/starship.toml         \"$HOME/.config/starship.toml\"
@@ -115,6 +116,7 @@ proot-distro login archlinux \
             chmod +x \"$HOME/.config/polybar/scripts/ticker-crypto.sh\" 2>/dev/null
             chmod +x \"$HOME/.config/scripts/power.sh\" 2>/dev/null
             chmod +x \"$HOME/.config/scripts/arch-update.sh\" 2>/dev/null
+            chmod +x \"$HOME/.config/scripts/proot-aliases.sh\" 2>/dev/null
             # Cria alias arch-update se nao existir
             grep -q \"arch-update\" \"$HOME/.bashrc\" 2>/dev/null || {
                 echo \"alias arch-update='$HOME/.config/scripts/arch-update.sh'\" >> \"$HOME/.bashrc\"
@@ -187,6 +189,8 @@ cp "$TMP_REPO/arch-on-android/configs/dunst/dunstrc"                  "$HOME/.co
 cp "$TMP_REPO/arch-on-android/configs/rofi/config.rasi"               "$HOME/.config/rofi/config.rasi" 2>/dev/null
 cp "$TMP_REPO/arch-on-android/configs/alacritty/alacritty.yml"        "$HOME/.config/alacritty/alacritty.yml" 2>/dev/null
 cp "$TMP_REPO/arch-on-android/configs/scripts/power.sh"               "$HOME/.config/scripts/power.sh" 2>/dev/null
+cp "$TMP_REPO/arch-on-android/configs/scripts/arch-update.sh"         "$HOME/.config/scripts/arch-update.sh" 2>/dev/null
+cp "$TMP_REPO/arch-on-android/configs/scripts/proot-aliases.sh"       "$HOME/.config/scripts/proot-aliases.sh" 2>/dev/null
 cp "$TMP_REPO/arch-on-android/configs/wallpapers/0010.png"            "$HOME/.config/wallpapers/0010.png" 2>/dev/null
 cp "$TMP_REPO/arch-on-android/configs/zsh/zshrc"                      "$HOME/.zshrc" 2>/dev/null
 cp "$TMP_REPO/arch-on-android/configs/starship/starship.toml"         "$HOME/.config/starship.toml" 2>/dev/null
@@ -196,6 +200,8 @@ chmod +x "$HOME/.config/polybar/scripts/updates.sh" 2>/dev/null
 chmod +x "$HOME/.config/polybar/scripts/spotify.sh" 2>/dev/null
 chmod +x "$HOME/.config/polybar/scripts/ticker-crypto.sh" 2>/dev/null
 chmod +x "$HOME/.config/scripts/power.sh" 2>/dev/null
+chmod +x "$HOME/.config/scripts/arch-update.sh" 2>/dev/null
+chmod +x "$HOME/.config/scripts/proot-aliases.sh" 2>/dev/null
 
 rm -rf "$TMP_REPO"
 echo "Configs aplicadas! Reinicie o i3: Mod+Shift+R"
