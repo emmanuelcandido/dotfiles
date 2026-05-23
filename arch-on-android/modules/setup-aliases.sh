@@ -109,6 +109,7 @@ proot-distro login archlinux \
             cp /tmp/dotfiles-configs/arch-on-android/configs/wallpapers/0010.png            \"$HOME/.config/wallpapers/0010.png\"
             cp /tmp/dotfiles-configs/arch-on-android/configs/zsh/zshrc                      \"$HOME/.zshrc\"
             cp /tmp/dotfiles-configs/arch-on-android/configs/starship/starship.toml         \"$HOME/.config/starship.toml\"
+            cp /tmp/dotfiles-configs/arch-on-android/configs/urxvt/Xresources              \"$HOME/.Xresources\"
             chmod +x \"$HOME/.config/polybar/scripts/updates.sh\" 2>/dev/null
             chmod +x \"$HOME/.config/polybar/scripts/spotify.sh\" 2>/dev/null
             chmod +x \"$HOME/.config/polybar/scripts/ticker-crypto.sh\" 2>/dev/null
@@ -132,6 +133,10 @@ proot-distro login archlinux \
         # Seta wallpaper (nord solid)
         command -v xsetroot >/dev/null 2>&1 || pacman -S --noconfirm xorg-xsetroot >/dev/null 2>&1
         xsetroot -solid '#2E3440' 2>/dev/null || true
+
+        # Carrega config do URxvt
+        command -v xrdb >/dev/null 2>&1 || pacman -S --noconfirm xorg-xrdb >/dev/null 2>&1
+        [ -f "$HOME/.Xresources" ] && xrdb -merge "$HOME/.Xresources" 2>/dev/null || true
 
         # Inicia i3
         exec i3 2>/dev/null || exec i3-wm
@@ -185,6 +190,7 @@ cp "$TMP_REPO/arch-on-android/configs/scripts/power.sh"               "$HOME/.co
 cp "$TMP_REPO/arch-on-android/configs/wallpapers/0010.png"            "$HOME/.config/wallpapers/0010.png" 2>/dev/null
 cp "$TMP_REPO/arch-on-android/configs/zsh/zshrc"                      "$HOME/.zshrc" 2>/dev/null
 cp "$TMP_REPO/arch-on-android/configs/starship/starship.toml"         "$HOME/.config/starship.toml" 2>/dev/null
+cp "$TMP_REPO/arch-on-android/configs/urxvt/Xresources"              "$HOME/.Xresources" 2>/dev/null
 
 chmod +x "$HOME/.config/polybar/scripts/updates.sh" 2>/dev/null
 chmod +x "$HOME/.config/polybar/scripts/spotify.sh" 2>/dev/null

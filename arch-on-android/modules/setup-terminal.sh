@@ -8,12 +8,13 @@ setup_terminal() {
     echo "[terminal] Instalando zsh + Starship + ferramentas TUI..."
 
     # ── Pacotes ──
-    # zsh, rxvt-unicode (URxvt), starship, thefuck, yazi, btop, glow
+    # zsh, rxvt-unicode (URxvt), starship, thefuck, yazi, btop, glow, JetBrains Mono Nerd Font
     # Nota: fzf, zoxide, eza, bat já são instalados pelo setup-tools.sh
     run_in_arch "
         pacman -S --noconfirm --needed \
             zsh rxvt-unicode starship \
-            thefuck yazi btop glow
+            thefuck yazi btop glow \
+            ttf-jetbrains-mono-nerd
     " || echo "[terminal] AVISO: Alguns pacotes falharam (verifique repo extra)"
 
     # ── Zinit (Zsh plugin manager) ──
@@ -46,6 +47,9 @@ setup_terminal() {
         # starship.toml
         mkdir -p \"\$HOME/.config\"
         cp \"\$SRC/starship/starship.toml\" \"\$HOME/.config/starship.toml\"
+
+        # Xresources (URxvt)
+        cp \"\$SRC/urxvt/Xresources\" \"\$HOME/.Xresources\"
 
         rm -rf \"\$TMP_REPO\"
         echo 'Configs de terminal aplicadas!'

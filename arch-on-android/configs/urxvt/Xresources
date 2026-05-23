@@ -1,0 +1,60 @@
+! URxvt config — Nord theme (ArchDroid)
+! Aplicar: xrdb -merge ~/.Xresources
+
+URxvt*background: #2E3440
+URxvt*foreground: #D8DEE9
+URxvt*cursorColor: #D8DEE9
+URxvt*pointerColorBackground: #2E3440
+URxvt*pointerColorForeground: #D8DEE9
+
+! Cursor
+URxvt*cursorBlink: true
+URxvt*cursorUnderline: false
+
+! Font (requer JetBrainsMono Nerd Font instalada)
+URxvt*font: xft:JetBrainsMono Nerd Font Mono:size=11
+URxvt*italicFont: xft:JetBrainsMono Nerd Font Mono:italic:size=11
+URxvt*boldFont: xft:JetBrainsMono Nerd Font Mono:bold:size=11
+URxvt*boldItalicFont: xft:JetBrainsMono Nerd Font Mono:bold:italic:size=11
+
+! Scroll
+URxvt*scrollBar: false
+URxvt*saveline: 5000
+URxvt*scrollTtyKeypress: true
+URxvt*scrollWithBuffer: true
+
+! Comportamento
+URxvt*urgentOnBell: true
+URxvt*visualBell: false
+URxvt*loginShell: true
+URxvt*termName: rxvt-unicode
+
+! Espaçamento
+URxvt*internalBorder: 8
+URxvt*lineSpace: 0
+URxvt*letterSpace: 0
+
+! Paleta Nord
+! Polar Night (backgrounds)
+URxvt*color0: #2E3440
+URxvt*color8: #4C566A
+
+! Snow Storm (foregrounds)
+URxvt*color7: #E5E9F0
+URxvt*color15: #ECEFF4
+
+! Frost (destaques)
+URxvt*color4: #81A1C1
+URxvt*color12: #81A1C1
+URxvt*color6: #88C0D0
+URxvt*color14: #8FBCBB
+
+! Aurora (semânticas)
+URxvt*color1: #BF616A
+URxvt*color9: #BF616A
+URxvt*color2: #A3BE8C
+URxvt*color10: #A3BE8C
+URxvt*color3: #EBCB8B
+URxvt*color11: #EBCB8B
+URxvt*color5: #B48EAD
+URxvt*color13: #B48EAD
