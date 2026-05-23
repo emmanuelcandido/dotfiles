@@ -107,6 +107,8 @@ proot-distro login archlinux \
             cp /tmp/dotfiles-configs/arch-on-android/configs/scripts/power.sh               \"$HOME/.config/scripts/power.sh\"
             cp /tmp/dotfiles-configs/arch-on-android/configs/scripts/arch-update.sh         \"$HOME/.config/scripts/arch-update.sh\"
             cp /tmp/dotfiles-configs/arch-on-android/configs/wallpapers/0010.png            \"$HOME/.config/wallpapers/0010.png\"
+            cp /tmp/dotfiles-configs/arch-on-android/configs/zsh/zshrc                      \"$HOME/.zshrc\"
+            cp /tmp/dotfiles-configs/arch-on-android/configs/starship/starship.toml         \"$HOME/.config/starship.toml\"
             chmod +x \"$HOME/.config/polybar/scripts/updates.sh\" 2>/dev/null
             chmod +x \"$HOME/.config/polybar/scripts/spotify.sh\" 2>/dev/null
             chmod +x \"$HOME/.config/polybar/scripts/ticker-crypto.sh\" 2>/dev/null
@@ -120,6 +122,10 @@ proot-distro login archlinux \
             ln -sf \"$HOME/.config/scripts/arch-update.sh\" /usr/local/bin/arch-update 2>/dev/null || true
             # Atualiza cache de icones Nordzy
             gtk-update-icon-cache /usr/share/icons/Nordzy 2>/dev/null || true
+            # Define Nordzy como tema de icone padrao do sistema
+            mkdir -p \"\$HOME/.config/gtk-3.0\" \"\$HOME/.config/gtk-4.0\"
+            printf '[Settings]\\ngtk-icon-theme-name=Nordzy\\ngtk-theme-name=Nordic\\ngtk-font-name=Noto Sans 10\\n' > \"\$HOME/.config/gtk-3.0/settings.ini\"
+            cp \"\$HOME/.config/gtk-3.0/settings.ini\" \"\$HOME/.config/gtk-4.0/settings.ini\" 2>/dev/null || true
         fi
         rm -rf /tmp/dotfiles-configs
 
@@ -177,6 +183,8 @@ cp "$TMP_REPO/arch-on-android/configs/rofi/config.rasi"               "$HOME/.co
 cp "$TMP_REPO/arch-on-android/configs/alacritty/alacritty.yml"        "$HOME/.config/alacritty/alacritty.yml" 2>/dev/null
 cp "$TMP_REPO/arch-on-android/configs/scripts/power.sh"               "$HOME/.config/scripts/power.sh" 2>/dev/null
 cp "$TMP_REPO/arch-on-android/configs/wallpapers/0010.png"            "$HOME/.config/wallpapers/0010.png" 2>/dev/null
+cp "$TMP_REPO/arch-on-android/configs/zsh/zshrc"                      "$HOME/.zshrc" 2>/dev/null
+cp "$TMP_REPO/arch-on-android/configs/starship/starship.toml"         "$HOME/.config/starship.toml" 2>/dev/null
 
 chmod +x "$HOME/.config/polybar/scripts/updates.sh" 2>/dev/null
 chmod +x "$HOME/.config/polybar/scripts/spotify.sh" 2>/dev/null

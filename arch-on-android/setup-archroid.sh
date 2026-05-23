@@ -19,7 +19,7 @@ mark_done() {
 clear_progress() {
     rm -f "$PROGRESS_FILE"
 }
-TOTAL_PHASES=6
+TOTAL_PHASES=7
 run_phase() {
     local num="$1" label="$2"; shift 2
     if phase_done "$num"; then
@@ -66,8 +66,11 @@ run_phase 3 "Configurando áudio (PulseAudio)"        setup_audio
 run_phase 4 "Instalando i3 + picom + ferramentas"    setup_i3
 run_phase 5 "Instalando apps e ferramentas"          setup_tools
 
-# ── Phase 6: Configs ──
-run_phase 6 "Aplicando configs (i3, polybar, dunst, rofi)" setup_configs
+# ── Phase 6: Terminal ──
+run_phase 6 "Instalando zsh + Starship + ferramentas TUI" setup_terminal
+
+# ── Phase 7: Configs ──
+run_phase 7 "Aplicando configs (i3, polybar, dunst, rofi)" setup_configs
 
 # ── Aliases (sempre roda, sem checkpoint) ──
 echo ""

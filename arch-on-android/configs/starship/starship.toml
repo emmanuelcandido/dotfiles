@@ -1,0 +1,106 @@
+# Starship config — ArchDroid Nord
+# Baseado em: terminal-setup-briefing.md
+# Fontes de referência: aiden1999/starship-nord, habutaso/starship-nord-theme,
+#   joshuai96/starship-powerline-nord, CalumMackenzie-Chambers, psychonaut
+
+add_newline = true
+
+[format]
+format = """
+$os\
+$username\
+$directory\
+$git_branch\
+$git_status\
+$fill\
+$time\
+$cmd_duration\
+$line_break\
+$character"""
+
+# ── Linha 1 — Esquerda ──
+
+[os]
+disabled = false
+style = "bg:#5E81AC fg:#2E3440"
+format = "[ $symbol ](bg:#5E81AC fg:#2E3440)"
+
+[username]
+show_always = true
+style_user = "bg:#5E81AC fg:#2E3440"
+style_root = "bg:#5E81AC fg:#2E3440"
+format = "[$user@$hostname](bg:#5E81AC fg:#2E3440)"
+
+[directory]
+style = "bg:#81A1C1 fg:#2E3440"
+format = "[ 󰉋 $path ](bg:#81A1C1 fg:#2E3440)"
+truncation_length = 3
+truncation_symbol = "…/"
+
+[git_branch]
+style = "bg:#88C0D0 fg:#2E3440"
+format = "[ 󰘬 $branch ](bg:#88C0D0 fg:#2E3440)"
+only_attached = true
+
+[git_status]
+style = "bg:#88C0D0 fg:#2E3440"
+format = "[$all_status$ahead_behind](bg:#88C0D0 fg:#2E3440)"
+conflicted = "🏳"
+staged = "[++](green)"
+modified = "[✎](yellow)"
+stashed = "[●](purple)"
+deleted = "[✗](red)"
+renamed = "[→](blue)"
+untracked = "[?](white)"
+ahead = " ↑"
+behind = " ↓"
+diverged = " ⇕"
+
+# ── Preenchimento (separa esquerda e direita) ──
+
+[fill]
+symbol = " "
+
+# ── Linha 1 — Direita ──
+
+[time]
+disabled = false
+style = "bg:#4C566A fg:#D8DEE9"
+format = "[ $time ](bg:#4C566A fg:#D8DEE9)"
+time_format = "%H:%M"
+
+[cmd_duration]
+style = "bg:#3B4252 fg:#88C0D0"
+format = "[ 󰔚 $duration ](bg:#3B4252 fg:#88C0D0)"
+min_time = 2000
+show_milliseconds = false
+
+# ── Linha 2 — Cursor ──
+
+[character]
+success_symbol = "[❯](bold #A3BE8C)"
+error_symbol = "[❯](bold #BF616A)"
+format = "$symbol "
+
+# ── Módulos excluídos explicitamente ──
+
+[python]
+disabled = true
+
+[nodejs]
+disabled = true
+
+[rust]
+disabled = true
+
+[golang]
+disabled = true
+
+[battery]
+disabled = true
+
+[docker]
+disabled = true
+
+[kubernetes]
+disabled = true

@@ -1,0 +1,80 @@
+# ── Zsh config — ArchDroid ──
+# https://github.com/emmanuelcandido/dotfiles
+
+# ── History ──
+HISTSIZE=50000
+SAVEHIST=50000
+HISTFILE="${HOME}/.zsh_history"
+setopt SHARE_HISTORY
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_SPACE
+setopt HIST_REDUCE_BLANKS
+
+# ── Completion ──
+autoload -Uz compinit && compinit -u
+zstyle ':completion:*' menu select
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+
+# ── Options ──
+setopt AUTO_CD
+setopt EXTENDED_GLOB
+setopt NUMERIC_GLOB_SORT
+
+# ── Zinit (auto-install se não existir) ──
+ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
+if [[ ! -f "${ZINIT_HOME}/zinit.zsh" ]]; then
+    command mkdir -p "${ZINIT_HOME}"
+    command git clone --depth 1 https://github.com/zdharma-continuum/zinit.git "${ZINIT_HOME}" 2>/dev/null || \
+        print -P "%F{red}[zinit] Falha ao clonar. Verifique conexão.%f"
+fi
+source "${ZINIT_HOME}/zinit.zsh" 2>/dev/null || true
+
+# ── Plugins ──
+zinit light zsh-users/zsh-autosuggestions
+zinit light hlissner/zsh-autopair
+zinit light zsh-users/zsh-syntax-highlighting
+zinit light zsh-users/zsh-history-substring-search
+
+# fzf-tab: lazy load (só após prompt)
+zinit ice wait lucid
+zinit light Aloxaf/fzf-tab
+
+# ── FZF ──
+if command -v fzf &>/dev/null; then
+    source <(fzf --zsh 2>/dev/null)
+fi
+
+# ── Zoxide ──
+if command -v zoxide &>/dev/null; then
+    eval "$(zoxide init zsh)"
+fi
+
+# ── Aliases ──
+alias ls='eza --icons'
+alias ll='eza -l --icons'
+alias la='eza -la --icons'
+alias lt='eza -la --icons --sort=time'
+alias tree='eza --tree --icons'
+alias cat='bat --theme=Nord'
+alias grep='rg'
+alias du='du -h'
+alias df='df -h'
+
+# ── TheFuck ──
+if command -v thefuck &>/dev/null; then
+    eval "$(thefuck --alias)"
+fi
+
+# ── Bat ──
+export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+export BAT_THEME="Nord"
+
+# ── Starship ──
+if command -v starship &>/dev/null; then
+    eval "$(starship init zsh)"
+fi
+
+# ── Editor ──
+export EDITOR="vim"
+export VISUAL="vim"
+export PAGER="bat"
