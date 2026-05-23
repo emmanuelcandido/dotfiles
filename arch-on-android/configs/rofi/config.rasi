@@ -92,19 +92,19 @@ listview {
 }
 
 element {
-    background-color: transparent;
+    background-color: @nord0;
     text-color: @text-color;
     padding: 6 8;
 }
 
-element selected {
+element selected.normal {
     background-color: @selected-color;
     text-color: @background-color;
 }
 
-element normal {
-    background-color: @nord0;
-    text-color: @text-color;
+element selected.urgent {
+    background-color: @urgent-color;
+    text-color: @nord6;
 }
 
 element urgent {
