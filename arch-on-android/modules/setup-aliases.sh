@@ -23,6 +23,10 @@ export TU_DEBUG=noconform
 export MESA_VK_WSI_PRESENT_MODE=immediate
 export ZINK_DESCRIPTORS=lazy
 
+# Mata orphans Electron/Chromium que acumulam memoria (OOM killer prevention)
+pkill -f "shm-helper" 2>/dev/null || true
+pkill -f "[e]lectron" 2>/dev/null || true
+
 cleanup() {
     echo "Parando sessão..."
     pkill -9 -f "termux.x11" 2>/dev/null
@@ -61,7 +65,7 @@ export PULSE_SERVER=127.0.0.1
 # Auto-start Arch MCP Server se instalado
 if [ -f "${HOME}/.arch-mcp/start.sh" ]; then
     echo "[mcp] Iniciando Arch MCP Server..."
-    bash "${HOME}/.arch-mcp/start.sh" 2>/dev/null || true
+    bash "${HOME}/.arch-mcp/start.sh" || echo "[mcp] AVISO: falha ao iniciar (veja ~/.arch-mcp/mcp.log)"
 fi
 
 # Entra no proot com forwarding de áudio + GPU + X11
@@ -107,6 +111,7 @@ proot-distro login archlinux \
             cp /tmp/dotfiles-configs/arch-on-android/configs/scripts/power.sh               \"$HOME/.config/scripts/power.sh\"
             cp /tmp/dotfiles-configs/arch-on-android/configs/scripts/arch-update.sh         \"$HOME/.config/scripts/arch-update.sh\"
             cp /tmp/dotfiles-configs/arch-on-android/configs/scripts/proot-aliases.sh       \"$HOME/.config/scripts/proot-aliases.sh\"
+            cp /tmp/dotfiles-configs/arch-on-android/configs/scripts/earlyoom-proot.sh     \"$HOME/.config/scripts/earlyoom-proot.sh\"
             cp /tmp/dotfiles-configs/arch-on-android/configs/wallpapers/0010.png            \"$HOME/.config/wallpapers/0010.png\"
             cp /tmp/dotfiles-configs/arch-on-android/configs/zsh/zshrc                      \"$HOME/.zshrc\"
             cp /tmp/dotfiles-configs/arch-on-android/configs/starship/starship.toml         \"$HOME/.config/starship.toml\"
@@ -117,9 +122,18 @@ proot-distro login archlinux \
             chmod +x \"$HOME/.config/scripts/power.sh\" 2>/dev/null
             chmod +x \"$HOME/.config/scripts/arch-update.sh\" 2>/dev/null
             chmod +x \"$HOME/.config/scripts/proot-aliases.sh\" 2>/dev/null
+            chmod +x \"$HOME/.config/scripts/earlyoom-proot.sh\" 2>/dev/null
             # Cria alias arch-update se nao existir
             grep -q \"arch-update\" \"$HOME/.bashrc\" 2>/dev/null || {
                 echo \"alias arch-update='$HOME/.config/scripts/arch-update.sh'\" >> \"$HOME/.bashrc\"
+            }
+            # Source proot-aliases no .bashrc se nao existir
+            grep -q \"proot-aliases\" \"$HOME/.bashrc\" 2>/dev/null || {
+                echo \"\" >> \"$HOME/.bashrc\"
+                echo \"# ── Proot Aliases ──\" >> \"$HOME/.bashrc\"
+                echo \"if [ -f \\\"\\$HOME/.config/scripts/proot-aliases.sh\\\" ]; then\" >> \"$HOME/.bashrc\"
+                echo \"  source \\\"\\$HOME/.config/scripts/proot-aliases.sh\\\"\" >> \"$HOME/.bashrc\"
+                echo \"fi\" >> \"$HOME/.bashrc\"
             }
             # Cria symlink no PATH se possivel
             ln -sf \"$HOME/.config/scripts/arch-update.sh\" /usr/local/bin/arch-update 2>/dev/null || true
@@ -140,8 +154,20 @@ proot-distro login archlinux \
         command -v xrdb >/dev/null 2>&1 || pacman -S --noconfirm xorg-xrdb >/dev/null 2>&1
         [ -f "$HOME/.Xresources" ] && xrdb -merge "$HOME/.Xresources" 2>/dev/null || true
 
-        # Inicia i3
-        exec i3 2>/dev/null || exec i3-wm
+	        # Reduce OOM score do proot (menos chance de ser morto pelo Android)
+	        echo -500 > /proc/self/oom_score_adj 2>/dev/null || true
+
+	        # Mata orphans dentro do proot (memoria baixa = OOM killer)
+	        pkill -f "[e]lectron" 2>/dev/null || true
+	        pkill -f "[c]hrome" 2>/dev/null || true
+
+	        # Inicia earlyoom watchdog em background (mata apps antes do Android matar o proot)
+	        if [ -f "$HOME/.config/scripts/earlyoom-proot.sh" ]; then
+	            bash "$HOME/.config/scripts/earlyoom-proot.sh" &
+	        fi
+
+	        # Inicia i3
+	        exec i3 2>/dev/null || exec i3-wm
     "
 STARTEOF
     chmod +x "${BIN_DIR}/start-arch"
@@ -191,6 +217,7 @@ cp "$TMP_REPO/arch-on-android/configs/alacritty/alacritty.yml"        "$HOME/.co
 cp "$TMP_REPO/arch-on-android/configs/scripts/power.sh"               "$HOME/.config/scripts/power.sh" 2>/dev/null
 cp "$TMP_REPO/arch-on-android/configs/scripts/arch-update.sh"         "$HOME/.config/scripts/arch-update.sh" 2>/dev/null
 cp "$TMP_REPO/arch-on-android/configs/scripts/proot-aliases.sh"       "$HOME/.config/scripts/proot-aliases.sh" 2>/dev/null
+cp "$TMP_REPO/arch-on-android/configs/scripts/earlyoom-proot.sh"     "$HOME/.config/scripts/earlyoom-proot.sh" 2>/dev/null
 cp "$TMP_REPO/arch-on-android/configs/wallpapers/0010.png"            "$HOME/.config/wallpapers/0010.png" 2>/dev/null
 cp "$TMP_REPO/arch-on-android/configs/zsh/zshrc"                      "$HOME/.zshrc" 2>/dev/null
 cp "$TMP_REPO/arch-on-android/configs/starship/starship.toml"         "$HOME/.config/starship.toml" 2>/dev/null
@@ -202,6 +229,16 @@ chmod +x "$HOME/.config/polybar/scripts/ticker-crypto.sh" 2>/dev/null
 chmod +x "$HOME/.config/scripts/power.sh" 2>/dev/null
 chmod +x "$HOME/.config/scripts/arch-update.sh" 2>/dev/null
 chmod +x "$HOME/.config/scripts/proot-aliases.sh" 2>/dev/null
+chmod +x "$HOME/.config/scripts/earlyoom-proot.sh" 2>/dev/null
+
+# Garante que .bashrc source os aliases VPS
+grep -q "proot-aliases" "$HOME/.bashrc" 2>/dev/null || {
+    echo "" >> "$HOME/.bashrc"
+    echo "# ── Proot Aliases ──" >> "$HOME/.bashrc"
+    echo 'if [ -f "$HOME/.config/scripts/proot-aliases.sh" ]; then' >> "$HOME/.bashrc"
+    echo '  source "$HOME/.config/scripts/proot-aliases.sh"' >> "$HOME/.bashrc"
+    echo 'fi' >> "$HOME/.bashrc"
+}
 
 rm -rf "$TMP_REPO"
 echo "Configs aplicadas! Reinicie o i3: Mod+Shift+R"
@@ -277,6 +314,10 @@ export TU_DEBUG=noconform
 export MESA_VK_WSI_PRESENT_MODE=immediate
 export ZINK_DESCRIPTORS=lazy
 
+# Mata orphans Electron/Chromium que acumulam memoria (OOM killer prevention)
+pkill -f "shm-helper" 2>/dev/null || true
+pkill -f "[e]lectron" 2>/dev/null || true
+
 cleanup() {
     echo "Parando sessão..."
     pkill -9 -f "termux.x11" 2>/dev/null
@@ -326,6 +367,18 @@ proot-distro login archlinux \
         export DESKTOP_SESSION=plasma
         export XDG_SESSION_DESKTOP=KDE
         export XDG_CURRENT_DESKTOP=KDE
+
+        # Reduce OOM score do proot (menos chance de ser morto pelo Android)
+        echo -500 > /proc/self/oom_score_adj 2>/dev/null || true
+
+        # Mata orphans dentro do proot
+        pkill -f "[e]lectron" 2>/dev/null || true
+        pkill -f "[c]hrome" 2>/dev/null || true
+
+        # Inicia earlyoom watchdog em background
+        if [ -f "$HOME/.config/scripts/earlyoom-proot.sh" ]; then
+            bash "$HOME/.config/scripts/earlyoom-proot.sh" &
+        fi
 
         exec startplasma-x11 2>/dev/null
     "
