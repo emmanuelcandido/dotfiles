@@ -385,9 +385,69 @@ proot-distro login archlinux \
 KDEEOF
     chmod +x "${BIN_DIR}/start-kde"
 
+    # ── VPS Aliases (Termux-level, fora do proot) ──
+    for _cmd in vps-shell vps-tmux vps-tmux-kill vps-claude vps-deploy vps-logs ccgram-restart; do
+        case "$_cmd" in
+            vps-shell)
+                cat > "${BIN_DIR}/vps-shell" << 'VPSSHELL'
+#!/data/data/com.termux/files/usr/bin/bash
+# vps-shell — Shell direto na VPS (via mosh)
+exec mosh root@lifeosdev.duckdns.org
+VPSSHELL
+                ;;
+            vps-tmux)
+                cat > "${BIN_DIR}/vps-tmux" << 'VPSTMUX'
+#!/data/data/com.termux/files/usr/bin/bash
+# vps-tmux — Menu interativo tmux na VPS (via mosh)
+# Lista, anexa, cria e encerra sessões
+exec mosh root@lifeosdev.duckdns.org -- bash /root/lifeos/infra/scripts/tmux-menu.sh
+VPSTMUX
+                ;;
+            vps-tmux-kill)
+                cat > "${BIN_DIR}/vps-tmux-kill" << 'VPSTKILL'
+#!/data/data/com.termux/files/usr/bin/bash
+# vps-tmux-kill — Encerra janela tmux na VPS (via mosh)
+exec mosh root@lifeosdev.duckdns.org -- bash /root/lifeos/infra/scripts/tmux-menu.sh kill
+VPSTKILL
+                ;;
+            vps-claude)
+                cat > "${BIN_DIR}/vps-claude" << 'VPSCLAUDE'
+#!/data/data/com.termux/files/usr/bin/bash
+# vps-claude — Mosh + cd /opt/infra + carrega env
+exec mosh root@lifeosdev.duckdns.org -- bash -c "cd /opt/infra && source .env.global 2>/dev/null; exec bash"
+VPSCLAUDE
+                ;;
+            vps-deploy)
+                cat > "${BIN_DIR}/vps-deploy" << 'VPSDEPLOY'
+#!/data/data/com.termux/files/usr/bin/bash
+# vps-deploy — Mosh + git pull + deploy
+exec mosh root@lifeosdev.duckdns.org -- bash -c "cd /opt/infra && git pull && sudo bash deploy.sh"
+VPSDEPLOY
+                ;;
+            vps-logs)
+                cat > "${BIN_DIR}/vps-logs" << 'VPSLOGS'
+#!/data/data/com.termux/files/usr/bin/bash
+# vps-logs — Mosh + journalctl tail
+exec mosh root@lifeosdev.duckdns.org -- journalctl -f -n 50
+VPSLOGS
+                ;;
+            ccgram-restart)
+                cat > "${BIN_DIR}/ccgram-restart" << 'CCGRAMRST'
+#!/data/data/com.termux/files/usr/bin/bash
+# ccgram-restart — Reinicia o bot ccgram na VPS
+exec mosh root@lifeosdev.duckdns.org -- systemctl restart ccgram.service
+CCGRAMRST
+                ;;
+        esac
+        chmod +x "${BIN_DIR}/${_cmd}"
+    done
+
     # Symlinks
     ln -sf "${BIN_DIR}/start-kde" "${HOME}/start-kde"
     ln -sf "${BIN_DIR}/start-arch-cli" "${HOME}/start-arch-cli"
+    for _cmd in vps-shell vps-tmux vps-tmux-kill vps-claude vps-deploy vps-logs ccgram-restart; do
+        ln -sf "${BIN_DIR}/${_cmd}" "${HOME}/${_cmd}"
+    done
 
-    echo "[aliases] Comandos criados: start-arch, start-arch-cli, start-kde, stop-arch, uninstall-arch, apply-configs"
+    echo "[aliases] Comandos criados: start-arch, start-arch-cli, start-kde, stop-arch, uninstall-arch, apply-configs, vps-* (7), ccgram-restart"
 }

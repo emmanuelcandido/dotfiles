@@ -2,13 +2,18 @@
 # proot-aliases.sh — Aliases da VPS e utilitários para o Arch proot
 # Fonte: https://github.com/emmanuelcandido/dotfiles
 # Instalação: echo "source ~/.config/scripts/proot-aliases.sh" >> ~/.zshrc
+#
+# Nota: Os alias VPS chamam scripts que existem na VPS (lifeosdev.duckdns.org).
+#       Script de referência: /opt/infra/infra/scripts/aliases.sh
 
 # ── VPS ──
-alias vps-shell='ssh root@lifeosdev.duckdns.org'
-alias vps-tmux='ssh -t root@lifeosdev.duckdns.org "tmux attach || tmux new"'
-alias vps-claude='ssh root@lifeosdev.duckdns.org "cd /opt/infra && source .env.global 2>/dev/null; exec bash"'
-alias vps-deploy='ssh root@lifeosdev.duckdns.org "cd /opt/infra && git pull && sudo bash deploy.sh"'
-alias vps-logs='ssh root@lifeosdev.duckdns.org "journalctl -f -n 50"'
+alias vps-shell='mosh root@lifeosdev.duckdns.org'
+alias vps-tmux='mosh root@lifeosdev.duckdns.org -- bash /root/lifeos/infra/scripts/tmux-menu.sh'
+alias vps-tmux-kill='mosh root@lifeosdev.duckdns.org -- bash /root/lifeos/infra/scripts/tmux-menu.sh kill'
+alias vps-claude='mosh root@lifeosdev.duckdns.org -- bash -c "cd /opt/infra && source .env.global 2>/dev/null; exec bash"'
+alias vps-deploy='mosh root@lifeosdev.duckdns.org -- bash -c "cd /opt/infra && git pull && sudo bash deploy.sh"'
+alias vps-logs='mosh root@lifeosdev.duckdns.org -- journalctl -f -n 50'
+alias ccgram-restart='mosh root@lifeosdev.duckdns.org -- systemctl restart ccgram.service && echo ccgram reiniciado'
 
 # ── Utilitários ──
 alias arch-update='~/.config/scripts/arch-update.sh'
