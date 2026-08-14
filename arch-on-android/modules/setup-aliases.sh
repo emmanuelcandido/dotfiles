@@ -386,7 +386,7 @@ KDEEOF
     chmod +x "${BIN_DIR}/start-kde"
 
     # ── VPS Aliases (Termux-level, fora do proot) ──
-    for _cmd in vps-shell vps-tmux vps-tmux-kill vps-claude vps-deploy vps-logs ccgram-restart; do
+    for _cmd in vps-shell vps-tmux vps-tmux-kill vps-claude vps-claude-safe vps-claude-resume vps-deploy vps-logs ccgram-restart; do
         case "$_cmd" in
             vps-shell)
                 cat > "${BIN_DIR}/vps-shell" << 'VPSSHELL'
@@ -413,9 +413,23 @@ VPSTKILL
             vps-claude)
                 cat > "${BIN_DIR}/vps-claude" << 'VPSCLAUDE'
 #!/data/data/com.termux/files/usr/bin/bash
-# vps-claude — Mosh + cd /opt/infra + carrega env
-exec mosh root@lifeosdev.duckdns.org -- bash -c "cd /opt/infra && source .env.global 2>/dev/null; exec bash"
+# vps-claude — Mosh + claude YOLO (IS_SANDBOX=1, sem permissões) no repo principal
+exec mosh root@lifeosdev.duckdns.org -- bash -c "cd /root/lifeos && IS_SANDBOX=1 claude --dangerously-skip-permissions"
 VPSCLAUDE
+                ;;
+            vps-claude-safe)
+                cat > "${BIN_DIR}/vps-claude-safe" << 'VPSCLAUDESAFE'
+#!/data/data/com.termux/files/usr/bin/bash
+# vps-claude-safe — Mosh + claude COM permissões (modo normal)
+exec mosh root@lifeosdev.duckdns.org -- bash -c "cd /root/lifeos && claude"
+VPSCLAUDESAFE
+                ;;
+            vps-claude-resume)
+                cat > "${BIN_DIR}/vps-claude-resume" << 'VPSCLAUDERESUME'
+#!/data/data/com.termux/files/usr/bin/bash
+# vps-claude-resume — Mosh + claude YOLO com menu de resume no repo principal
+exec mosh root@lifeosdev.duckdns.org -- bash -c "cd /root/lifeos && IS_SANDBOX=1 claude --dangerously-skip-permissions --resume"
+VPSCLAUDERESUME
                 ;;
             vps-deploy)
                 cat > "${BIN_DIR}/vps-deploy" << 'VPSDEPLOY'
@@ -445,9 +459,9 @@ CCGRAMRST
     # Symlinks
     ln -sf "${BIN_DIR}/start-kde" "${HOME}/start-kde"
     ln -sf "${BIN_DIR}/start-arch-cli" "${HOME}/start-arch-cli"
-    for _cmd in vps-shell vps-tmux vps-tmux-kill vps-claude vps-deploy vps-logs ccgram-restart; do
+    for _cmd in vps-shell vps-tmux vps-tmux-kill vps-claude vps-claude-safe vps-claude-resume vps-deploy vps-logs ccgram-restart; do
         ln -sf "${BIN_DIR}/${_cmd}" "${HOME}/${_cmd}"
     done
 
-    echo "[aliases] Comandos criados: start-arch, start-arch-cli, start-kde, stop-arch, uninstall-arch, apply-configs, vps-* (7), ccgram-restart"
+    echo "[aliases] Comandos criados: start-arch, start-arch-cli, start-kde, stop-arch, uninstall-arch, apply-configs, vps-* (9), ccgram-restart"
 }
