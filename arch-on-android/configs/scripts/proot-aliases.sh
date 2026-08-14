@@ -13,6 +13,7 @@ alias vps-tmux-kill='mosh root@lifeosdev.duckdns.org -- bash /root/lifeos/infra/
 alias vps-claude='mosh root@lifeosdev.duckdns.org -- bash -c "cd /root/lifeos && IS_SANDBOX=1 claude --dangerously-skip-permissions"'
 alias vps-claude-safe='mosh root@lifeosdev.duckdns.org -- bash -c "cd /root/lifeos && claude"'
 alias vps-claude-resume='mosh root@lifeosdev.duckdns.org -- bash -c "cd /root/lifeos && IS_SANDBOX=1 claude --dangerously-skip-permissions --resume"'
+alias vps-claude-safe-resume='mosh root@lifeosdev.duckdns.org -- bash -c "cd /root/lifeos && claude --resume"'
 alias vps-deploy='mosh root@lifeosdev.duckdns.org -- bash -c "cd /opt/infra && git pull && sudo bash deploy.sh"'
 alias vps-logs='mosh root@lifeosdev.duckdns.org -- journalctl -f -n 50'
 alias ccgram-restart='mosh root@lifeosdev.duckdns.org -- systemctl restart ccgram.service && echo ccgram reiniciado'

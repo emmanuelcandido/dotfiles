@@ -386,7 +386,7 @@ KDEEOF
     chmod +x "${BIN_DIR}/start-kde"
 
     # ── VPS Aliases (Termux-level, fora do proot) ──
-    for _cmd in vps-shell vps-tmux vps-tmux-kill vps-claude vps-claude-safe vps-claude-resume vps-deploy vps-logs ccgram-restart; do
+    for _cmd in vps-shell vps-tmux vps-tmux-kill vps-claude vps-claude-safe vps-claude-resume vps-claude-safe-resume vps-deploy vps-logs ccgram-restart; do
         case "$_cmd" in
             vps-shell)
                 cat > "${BIN_DIR}/vps-shell" << 'VPSSHELL'
@@ -431,6 +431,13 @@ VPSCLAUDESAFE
 exec mosh root@lifeosdev.duckdns.org -- bash -c "cd /root/lifeos && IS_SANDBOX=1 claude --dangerously-skip-permissions --resume"
 VPSCLAUDERESUME
                 ;;
+            vps-claude-safe-resume)
+                cat > "${BIN_DIR}/vps-claude-safe-resume" << 'VPSCLAUDESAFERESUME'
+#!/data/data/com.termux/files/usr/bin/bash
+# vps-claude-safe-resume — Mosh + claude COM permissões + menu de resume
+exec mosh root@lifeosdev.duckdns.org -- bash -c "cd /root/lifeos && claude --resume"
+VPSCLAUDESAFERESUME
+                ;;
             vps-deploy)
                 cat > "${BIN_DIR}/vps-deploy" << 'VPSDEPLOY'
 #!/data/data/com.termux/files/usr/bin/bash
@@ -459,9 +466,9 @@ CCGRAMRST
     # Symlinks
     ln -sf "${BIN_DIR}/start-kde" "${HOME}/start-kde"
     ln -sf "${BIN_DIR}/start-arch-cli" "${HOME}/start-arch-cli"
-    for _cmd in vps-shell vps-tmux vps-tmux-kill vps-claude vps-claude-safe vps-claude-resume vps-deploy vps-logs ccgram-restart; do
+    for _cmd in vps-shell vps-tmux vps-tmux-kill vps-claude vps-claude-safe vps-claude-resume vps-claude-safe-resume vps-deploy vps-logs ccgram-restart; do
         ln -sf "${BIN_DIR}/${_cmd}" "${HOME}/${_cmd}"
     done
 
-    echo "[aliases] Comandos criados: start-arch, start-arch-cli, start-kde, stop-arch, uninstall-arch, apply-configs, vps-* (9), ccgram-restart"
+    echo "[aliases] Comandos criados: start-arch, start-arch-cli, start-kde, stop-arch, uninstall-arch, apply-configs, vps-* (10), ccgram-restart"
 }
