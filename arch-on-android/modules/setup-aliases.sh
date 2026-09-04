@@ -5,6 +5,11 @@ setup_aliases() {
     local BIN_DIR="${HOME}/.local/bin"
     mkdir -p "${BIN_DIR}"
 
+    # ── Limpeza de obsoletos (versões antigas que saíram da lista) ──
+    for _old in vps-ssh vps-ccbot ccbot ccbot-restart vps-ccbot-restart; do
+        rm -f "${BIN_DIR}/${_old}" "${HOME}/${_old}"
+    done
+
     # ── start-arch ──
     cat > "${BIN_DIR}/start-arch" << 'STARTEOF'
 #!/data/data/com.termux/files/usr/bin/bash
@@ -386,13 +391,13 @@ KDEEOF
     chmod +x "${BIN_DIR}/start-kde"
 
     # ── VPS Aliases (Termux-level, fora do proot) ──
-    for _cmd in vps-shell vps-tmux vps-tmux-kill vps-claude vps-claude-safe vps-claude-resume vps-claude-safe-resume vps-deploy vps-logs ccgram-restart; do
+    for _cmd in vps-shell vps-tmux vps-tmux-kill vps-claude vps-claude-safe vps-claude-resume vps-claude-safe-resume vps-cc-or vps-pi vps-pi-coder vps-herdr vps-deploy vps-logs ccgram-restart; do
         case "$_cmd" in
             vps-shell)
                 cat > "${BIN_DIR}/vps-shell" << 'VPSSHELL'
 #!/data/data/com.termux/files/usr/bin/bash
-# vps-shell — Shell direto na VPS (via mosh)
-exec mosh root@lifeosdev.duckdns.org
+# vps-shell — Shell direto na VPS (via mosh), já dentro de /root/lifeos (04/09)
+exec mosh root@lifeosdev.duckdns.org -- bash -c 'cd /root/lifeos && exec bash -i'
 VPSSHELL
                 ;;
             vps-tmux)
@@ -438,6 +443,34 @@ VPSCLAUDERESUME
 exec mosh root@lifeosdev.duckdns.org -- bash -c "cd /root/lifeos && claude --resume"
 VPSCLAUDESAFERESUME
                 ;;
+            vps-cc-or)
+                cat > "${BIN_DIR}/vps-cc-or" << 'VPSCCOR'
+#!/data/data/com.termux/files/usr/bin/bash
+# vps-cc-or — Claude Code via OpenRouter NA VPS (função cc-or do ~/.bash_aliases), sempre em /root/lifeos (04/09)
+exec mosh root@lifeosdev.duckdns.org -- bash -c 'cd /root/lifeos && . ~/.bash_aliases && cc-or "$@"' _ "$@"
+VPSCCOR
+                ;;
+            vps-pi)
+                cat > "${BIN_DIR}/vps-pi" << 'VPSPI'
+#!/data/data/com.termux/files/usr/bin/bash
+# vps-pi — Pi (perfil founder) NA VPS, sempre em /root/lifeos (04/09)
+exec mosh root@lifeosdev.duckdns.org -- bash -c 'cd /root/lifeos && . ~/.bash_aliases && pi "$@"' _ "$@"
+VPSPI
+                ;;
+            vps-pi-coder)
+                cat > "${BIN_DIR}/vps-pi-coder" << 'VPSPICODER'
+#!/data/data/com.termux/files/usr/bin/bash
+# vps-pi-coder — Pi (perfil coder isolado) NA VPS, sempre em /root/lifeos (04/09)
+exec mosh root@lifeosdev.duckdns.org -- bash -c 'cd /root/lifeos && . ~/.bash_aliases && pi-coder "$@"' _ "$@"
+VPSPICODER
+                ;;
+            vps-herdr)
+                cat > "${BIN_DIR}/vps-herdr" << 'VPSHERDR'
+#!/data/data/com.termux/files/usr/bin/bash
+# vps-herdr — Anexa a sessão herdr (tmux herdr-coder) NA VPS (04/09)
+exec mosh root@lifeosdev.duckdns.org -- tmux attach -t herdr-coder
+VPSHERDR
+                ;;
             vps-deploy)
                 cat > "${BIN_DIR}/vps-deploy" << 'VPSDEPLOY'
 #!/data/data/com.termux/files/usr/bin/bash
@@ -466,9 +499,15 @@ CCGRAMRST
     # Symlinks
     ln -sf "${BIN_DIR}/start-kde" "${HOME}/start-kde"
     ln -sf "${BIN_DIR}/start-arch-cli" "${HOME}/start-arch-cli"
-    for _cmd in vps-shell vps-tmux vps-tmux-kill vps-claude vps-claude-safe vps-claude-resume vps-claude-safe-resume vps-deploy vps-logs ccgram-restart; do
+    for _cmd in vps-shell vps-tmux vps-tmux-kill vps-claude vps-claude-safe vps-claude-resume vps-claude-safe-resume vps-cc-or vps-pi vps-pi-coder vps-herdr vps-deploy vps-logs ccgram-restart; do
         ln -sf "${BIN_DIR}/${_cmd}" "${HOME}/${_cmd}"
     done
 
-    echo "[aliases] Comandos criados: start-arch, start-arch-cli, start-kde, stop-arch, uninstall-arch, apply-configs, vps-* (10), ccgram-restart"
+    echo "[aliases] Comandos criados: start-arch, start-arch-cli, start-kde, stop-arch, uninstall-arch, apply-configs, vps-* (14: shell/tmux/claude/cc-or/pi/pi-coder/herdr/deploy/logs), ccgram-restart"
 }
+
+# Execução direta: `bash setup-aliases.sh` instala/atualiza tudo (idempotente — 04/09)
+# Quando sourceado (apply-configs.sh / setup-archroid.sh), só define a função.
+if [[ "${BASH_SOURCE[0]}" == "$0" ]]; then
+    setup_aliases
+fi
