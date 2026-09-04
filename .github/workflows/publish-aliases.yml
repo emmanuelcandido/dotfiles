@@ -1,0 +1,42 @@
+name: publish-aliases
+
+# Espelha arch-on-android/modules/setup-aliases.sh (dotfiles privado) → repo público
+# emmanuelcandido/termux-aliases (setup-aliases.sh). Deploy key (RW, só no público)
+# guardada no secret ACTIONS_DEPLOY_KEY — nunca editar o arquivo no repo público.
+on:
+  push:
+    paths: ["arch-on-android/modules/setup-aliases.sh"]
+  workflow_dispatch:
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout do dotfiles (privado)
+        uses: actions/checkout@v4
+
+      - name: Publicar no repo público
+        env:
+          DEPLOY_KEY: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+        run: |
+          set -euo pipefail
+          mkdir -p ~/.ssh
+          echo "$DEPLOY_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan github.com >> ~/.ssh/known_hosts 2>/dev/null
+          export GIT_SSH_COMMAND="ssh -i ~/.ssh/deploy_key -o IdentitiesOnly=yes"
+
+          git clone git@github.com:emmanuelcandido/termux-aliases.git /tmp/termux-aliases
+          cd /tmp/termux-aliases
+          git config user.name "publish-aliases[bot]"
+          git config user.email "emmanuel+aliases-bot@users.noreply.github.com"
+
+          cp "${GITHUB_WORKSPACE}/arch-on-android/modules/setup-aliases.sh" setup-aliases.sh
+          if git diff --quiet; then
+            echo "setup-aliases.sh inalterado — nada a publicar"
+            exit 0
+          fi
+          git add setup-aliases.sh
+          git commit -m "sync: setup-aliases.sh do dotfiles (${GITHUB_SHA:0:7})"
+          git push origin main
+          echo "Publicado: ${GITHUB_SHA:0:7}"
