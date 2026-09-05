@@ -33,11 +33,11 @@ jobs:
 
           cp "${GITHUB_WORKSPACE}/arch-on-android/modules/setup-aliases.sh" setup-aliases.sh
           cp "${GITHUB_WORKSPACE}/arch-on-android/modules/setup-termux-shell.sh" setup-termux-shell.sh
-          if git diff --quiet; then
-            echo "setup-aliases.sh inalterado — nada a publicar"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "Setups inalterados — nada a publicar"
             exit 0
           fi
-          git add setup-aliases.sh
-          git commit -m "sync: setup-aliases.sh do dotfiles (${GITHUB_SHA:0:7})"
+          git commit -m "sync: setups do dotfiles (${GITHUB_SHA:0:7})"
           git push origin main
           echo "Publicado: ${GITHUB_SHA:0:7}"
