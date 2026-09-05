@@ -5,7 +5,7 @@ name: publish-aliases
 # guardada no secret ACTIONS_DEPLOY_KEY — nunca editar o arquivo no repo público.
 on:
   push:
-    paths: ["arch-on-android/modules/setup-aliases.sh"]
+    paths: ["arch-on-android/modules/setup-aliases.sh", "arch-on-android/modules/setup-termux-shell.sh"]
   workflow_dispatch:
 
 jobs:
@@ -32,6 +32,7 @@ jobs:
           git config user.email "emmanuel+aliases-bot@users.noreply.github.com"
 
           cp "${GITHUB_WORKSPACE}/arch-on-android/modules/setup-aliases.sh" setup-aliases.sh
+          cp "${GITHUB_WORKSPACE}/arch-on-android/modules/setup-termux-shell.sh" setup-termux-shell.sh
           if git diff --quiet; then
             echo "setup-aliases.sh inalterado — nada a publicar"
             exit 0
