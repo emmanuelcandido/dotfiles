@@ -5,7 +5,7 @@ name: publish-aliases
 # guardada no secret ACTIONS_DEPLOY_KEY — nunca editar o arquivo no repo público.
 on:
   push:
-    paths: ["arch-on-android/modules/setup-aliases.sh", "arch-on-android/modules/setup-termux-shell.sh", "arch-on-android/configs-termux/starship.toml"]
+    paths: ["arch-on-android/modules/setup-aliases.sh", "arch-on-android/modules/setup-termux-shell.sh", "arch-on-android/configs-termux/starship.toml", "arch-dot-files/modules/setup-linux-shell.sh", "arch-dot-files/configs/starship-linux.toml"]
   workflow_dispatch:
 
 jobs:
@@ -34,6 +34,8 @@ jobs:
           cp "${GITHUB_WORKSPACE}/arch-on-android/modules/setup-aliases.sh" setup-aliases.sh
           cp "${GITHUB_WORKSPACE}/arch-on-android/modules/setup-termux-shell.sh" setup-termux-shell.sh
           cp "${GITHUB_WORKSPACE}/arch-on-android/configs-termux/starship.toml" starship.toml
+          cp "${GITHUB_WORKSPACE}/arch-dot-files/modules/setup-linux-shell.sh" setup-linux.sh
+          cp "${GITHUB_WORKSPACE}/arch-dot-files/configs/starship-linux.toml" starship-linux.toml
           git add -A
           if git diff --cached --quiet; then
             echo "Setups inalterados — nada a publicar"
